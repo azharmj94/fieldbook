@@ -274,8 +274,8 @@ input[type=range],input[type=checkbox]{box-shadow:none!important;padding:0}
 .hb div{height:6px}.hb b,.metrics,.dow,.ch em{font-variant-numeric:tabular-nums}
 .themes button{border-radius:14px;transition:transform .2s var(--spring),border-color .25s,box-shadow .25s}
 .box{border-radius:14px}
-/* left drawer nav: hidden off-canvas, opened by swiping from the left edge (or the menu button) */
-.side{position:fixed;top:0;bottom:0;left:0;right:auto;width:min(280px,82vw);height:auto;display:flex;flex-direction:column;border:0;border-right:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow);z-index:15;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) env(safe-area-inset-left);transform:translateX(-105%);visibility:hidden;transition:transform .35s var(--ease),visibility 0s .35s;touch-action:pan-y}
+/* right drawer nav: hidden off-canvas, opened by swiping from the right edge (or the menu button) */
+.side{position:fixed;top:0;bottom:0;left:auto;right:0;width:min(280px,82vw);height:auto;display:flex;flex-direction:column;border:0;border-left:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow);z-index:15;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) 0;transform:translateX(105%);visibility:hidden;transition:transform .35s var(--ease),visibility 0s .35s;touch-action:pan-y}
 .side.open{transform:none;visibility:visible;transition:transform .35s var(--ease),visibility 0s}
 .side.drag{transition:none;visibility:visible}
 .side .brand,.side .who{display:flex}
@@ -293,6 +293,7 @@ input[type=range],input[type=checkbox]{box-shadow:none!important;padding:0}
 .navpill{position:absolute;left:12px;right:12px;top:0;height:44px;border-radius:12px;background:var(--tint);border:1px solid var(--line);transition:transform .45s var(--spring),height .3s var(--ease);pointer-events:none}
 .menubtn{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--txt);box-shadow:var(--shadow);display:grid;place-items:center;padding:0;transition:transform .25s var(--spring)}
 .menubtn:active{transform:scale(.9)}
+@media(min-width:900px){.menubtn{order:3}}
 .msync{display:block;margin:0 0 6px}
 .ov{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .ov.on{animation:fade .25s ease both}
@@ -327,9 +328,9 @@ input[type=range],input[type=checkbox]{box-shadow:none!important;padding:0}
   </aside>
   <main>
     <div class="top">
-      <button class="menubtn" id="menuBtn" type="button" aria-label="Open menu" aria-controls="side" aria-expanded="false" title="Menu (or swipe from the left edge)"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <div class="tt"><svg class="logo2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#27443a"/><stop offset="1" stop-color="#0f1b17"/></linearGradient></defs><rect width="512" height="512" rx="116" fill="url(#lg1)"/><g class="bk"><rect x="124" y="92" width="250" height="316" rx="34" fill="#efe8d6"/><path d="M124 126a34 34 0 0 1 34-34h34v316h-34a34 34 0 0 1-34-34z" fill="#7fc4ad"/><path d="M228 168h104M228 220h104M228 272h60" fill="none" stroke="#cfc5ab" stroke-width="14" stroke-linecap="round"/><path d="M158 150v200" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".4"/></g><g class="coin"><circle cx="352" cy="352" r="88" fill="#15251f"/><circle cx="352" cy="352" r="76" fill="#d9a871"/><circle cx="352" cy="352" r="54" fill="none" stroke="#8a5a2b" stroke-width="6" opacity=".4"/><path d="M324 354l20 20 38-44" fill="none" stroke="#6b4420" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/></g></svg><div><h1 id="title"></h1><small id="dateLine"></small></div></div>
       <button class="themebtn" id="themeBtn" type="button" data-act="theme" role="switch" aria-checked="false" aria-label="Dark mode" title="Switch light / dark mode"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+      <button class="menubtn" id="menuBtn" type="button" aria-label="Open menu" aria-controls="side" aria-expanded="false" title="Menu (or swipe from the right edge)"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <div class="tools"><input id="search" type="search" placeholder="Search tasks…" aria-label="Search tasks">
       <button class="btn ic" id="undoB" data-act="undo" aria-label="Undo" title="Undo (Ctrl+Z)"><svg class="i" viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg></button>
       <button class="btn ic" id="redoB" data-act="redo" aria-label="Redo" title="Redo (Ctrl+Y)"><svg class="i" viewBox="0 0 24 24"><path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 000 12h3"/></svg></button>
@@ -797,7 +798,7 @@ document.addEventListener('drop',e=>{const el=e.target.closest&&e.target.closest
  const t=state.tasks.find(x=>x.id===e.dataTransfer.getData('text/plain')),d=el.dataset.drop;if(!t)return;
  if(!d){if(!t.start)return;t.start='';t.end=''}else{if(t.start===d)return;const len=t.start?diff(endOf(t),t.start):0;t.start=d;t.end=addDays(d,len)}save()});
 window.addEventListener('hashchange',()=>{setSide(false);ui.q='';$('#search').value='';render();window.scrollTo(0,0)});
-/* ---------- left drawer: swipe from the left edge to open, swipe left / tap outside / Esc to close ---------- */
+/* ---------- right drawer: swipe from the right edge to open, swipe right / tap outside / Esc to close ---------- */
 function setSide(o){const sd=$('#side');sd.classList.remove('drag');sd.style.transform='';sd.classList.toggle('open',o);$('#sideScrim').classList.toggle('on',o);$('#sideScrim').style.opacity='';$('#menuBtn').setAttribute('aria-expanded',String(o));if(o)requestAnimationFrame(movePill)}
 $('#menuBtn').addEventListener('click',()=>setSide(true));
 $('#sideScrim').addEventListener('click',()=>setSide(false));
@@ -805,13 +806,13 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#side').classLis
 (function(){const EDGE=24;let sw=null;
  document.addEventListener('touchstart',e=>{if(e.touches.length!==1||$('#ov').classList.contains('on')){sw=null;return}
   const t=e.touches[0],open=$('#side').classList.contains('open');
-  if(!open&&t.clientX>EDGE){sw=null;return}
+  if(!open&&t.clientX<innerWidth-EDGE){sw=null;return}
   sw={x:t.clientX,y:t.clientY,open,lock:0,dx:0,w:$('#side').offsetWidth,t:Date.now()}},{passive:true});
- document.addEventListener('touchmove',e=>{if(!sw)return;const t=e.touches[0],dx=t.clientX-sw.x,dy=t.clientY-sw.y;
+ document.addEventListener('touchmove',e=>{if(!sw)return;const t=e.touches[0],dx=sw.x-t.clientX,dy=t.clientY-sw.y;
   if(!sw.lock){if(Math.abs(dx)<8&&Math.abs(dy)<8)return;sw.lock=Math.abs(dx)>Math.abs(dy)?1:-1;if(sw.lock===1)$('#side').classList.add('drag')}
   if(sw.lock!==1)return;e.preventDefault();sw.dx=dx;
   const x=sw.open?Math.min(0,dx):Math.min(0,dx-sw.w);
-  $('#side').style.transform='translateX('+x+'px)';$('#sideScrim').classList.add('on');$('#sideScrim').style.opacity=String(1+x/sw.w)},{passive:false});
+  $('#side').style.transform='translateX('+(-x)+'px)';$('#sideScrim').classList.add('on');$('#sideScrim').style.opacity=String(1+x/sw.w)},{passive:false});
  const end=()=>{if(!sw)return;const s=sw;sw=null;if(s.lock!==1)return;
   const fast=Math.abs(s.dx)/Math.max(1,Date.now()-s.t)>.5;
   setSide(s.open?!(s.dx<-s.w/3||(fast&&s.dx<0)):(s.dx>s.w/3||(fast&&s.dx>0)))};
