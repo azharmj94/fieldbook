@@ -210,7 +210,7 @@ input[type=color]{padding:2px;height:36px}
 
 /* ===== calm paper restyle + motion (matches Spending Tracker) ===== */
 html{background:var(--bg)}
-body{background:transparent;position:relative;font-family:Roboto,system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14.5px;padding:env(safe-area-inset-top) 0 calc(24px + env(safe-area-inset-bottom));height:auto;min-height:100%}
+body{background:transparent;position:relative;font-family:Roboto,system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14.5px;padding:env(safe-area-inset-top) 0 calc(var(--badge) + 16px + env(safe-area-inset-bottom));height:auto;min-height:100%}
 body::before,body::after{content:"";position:fixed;z-index:-1;width:70vmax;height:70vmax;border-radius:50%;filter:blur(60px);pointer-events:none;will-change:transform}
 body::before{left:-25vmax;top:-30vmax;background:radial-gradient(circle,var(--blob1),transparent 65%);animation:drift1 26s ease-in-out infinite alternate}
 body::after{right:-30vmax;bottom:-25vmax;background:radial-gradient(circle,var(--blob2),transparent 65%);animation:drift2 32s ease-in-out infinite alternate}
@@ -297,9 +297,11 @@ input[type=range],input[type=checkbox]{box-shadow:none!important;padding:0}
 .msync{display:block;margin:0 0 6px}
 .ov{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .ov.on{animation:fade .25s ease both}
-.modal{border-radius:20px 20px 0 0;animation:sheet .45s var(--spring);box-shadow:var(--shadow)}
-@media(min-width:700px){.modal{border-radius:20px}}
-#toast{display:block;opacity:0;pointer-events:none;border-radius:999px;font-weight:500;bottom:calc(72px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px) scale(.9);transition:opacity .3s,transform .45s var(--spring);box-shadow:var(--shadow)}
+.modal{border-radius:20px 20px 0 0;animation:sheet .45s var(--spring);box-shadow:var(--shadow);padding-bottom:calc(var(--badge) + env(safe-area-inset-bottom))}
+@media(min-width:700px){.modal{border-radius:20px;padding-bottom:18px}.ov{padding-bottom:var(--badge)}}
+/* keep clear of the "Powered by Netlify" badge Netlify pins to the bottom of the page */
+:root{--badge:76px}
+#toast{display:block;opacity:0;pointer-events:none;border-radius:999px;font-weight:500;bottom:calc(var(--badge) + 12px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px) scale(.9);transition:opacity .3s,transform .45s var(--spring);box-shadow:var(--shadow)}
 #toast.on{opacity:1;transform:translateX(-50%)}
 #view.enter{animation:fade .45s var(--ease) both}
 #view.enter .card,#view.enter .kpi,#view.enter .ym{animation:up .6s var(--ease) both}

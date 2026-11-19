@@ -1,5 +1,5 @@
 /* Offline support for your own hosting (not used inside Claude). */
-const CACHE='fieldbook-v4';
+const CACHE='fieldbook-v5';
 const SHELL=['./','index.html','pdf-lib.min.js','manifest.webmanifest','icon.svg','icon-192.png','icon-512.png','icon-maskable-512.png','apple-touch-icon.png'];
 const LIBS=['fonts.googleapis.com','fonts.gstatic.com'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>Promise.all(SHELL.map(u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?c.put(u,r):null).catch(()=>null)))).then(()=>self.skipWaiting()))});
