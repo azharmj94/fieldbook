@@ -837,7 +837,9 @@ function remindCard(){const q=rmQuiet(),why=rmWhy(),hrs=[...Array(24).keys()].ma
   +'<label class="ck"><input type="checkbox" id="rmQuietOn"'+(q.on?' checked':'')+'>Quiet hours: no reminders between</label><div class="set" style="margin-top:6px"><label>From'+hs('rmFrom',q.start)+'</label><label>Until'+hs('rmTo',q.end)+'</label></div>')
  +'<div id="rmMsg" style="color:var(--mut);font-size:12.5px;margin-top:8px">'+esc(RM.msg)+'</div>'}
 const b64u=s=>{const p='='.repeat((4-s.length%4)%4),b=atob((s+p).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(b,c=>c.charCodeAt(0))};
-async function rmApi(path,method,body){const r=await fetch(path,{method,headers:{'content-type':'application/json'},body:body?JSON.stringify(body):undefined});let j={};try{j=await r.json()}catch(e){}if(!r.ok)throw new Error(j.error||('Server error '+r.status));return j}
+/* the app is served from GitHub Pages; the reminder API still runs as Netlify functions */
+const API=/\.netlify\.app$/.test(location.hostname)?'':'https://fieldbook-azhar.netlify.app';
+async function rmApi(path,method,body){const r=await fetch(API+path,{method,headers:{'content-type':'application/json'},body:body?JSON.stringify(body):undefined});let j={};try{j=await r.json()}catch(e){}if(!r.ok)throw new Error(j.error||('Server error '+r.status));return j}
 async function rmSave(){if(!RM.sub)return;await rmApi('/api/push','POST',{subscription:RM.sub.toJSON(),quiet:rmQuiet(),tz:Intl.DateTimeFormat().resolvedOptions().timeZone})}
 async function rmToggle(){RM.busy=true;RM.msg='';renderView();try{
  if(RM.state==='on'){const ep=RM.sub.endpoint;await RM.sub.unsubscribe().catch(()=>{});await rmApi('/api/push','DELETE',{endpoint:ep}).catch(()=>{});RM.sub=null;RM.state='off';RM.msg='Reminders are off for this device.'}

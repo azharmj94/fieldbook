@@ -13,6 +13,20 @@ const store = () => getStore({ name: "push-subs", consistency: "strong" });
 const keyFor = (endpoint: string) => createHash("sha256").update(endpoint).digest("hex");
 const bad = (msg: string, status = 400) => Response.json({ error: msg }, { status });
 
+// The app itself is served from GitHub Pages, so allow that origin to call this API.
+const ALLOWED_ORIGINS = ["https://azharmj94.github.io"];
+function withCors(req: Request, res: Response) {
+  const origin = req.headers.get("origin");
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    res.headers.set("Access-Control-Allow-Origin", origin);
+    res.headers.set("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+    res.headers.set("Access-Control-Allow-Headers", "content-type");
+    res.headers.set("Access-Control-Max-Age", "86400");
+    res.headers.append("Vary", "Origin");
+  }
+  return res;
+}
+
 function okEndpoint(e: unknown): e is string {
   if (typeof e !== "string" || e.length > 1000) return false;
   try {
@@ -30,6 +44,11 @@ function cleanTz(tz: any) {
 }
 
 export default async (req: Request, context: Context) => {
+  if (req.method === "OPTIONS") return withCors(req, new Response(null, { status: 204 }));
+  return withCors(req, await handle(req));
+};
+
+async function handle(req: Request): Promise<Response> {
   const url = new URL(req.url);
   const pub = Netlify.env.get("VAPID_PUBLIC_KEY");
   if (url.pathname.endsWith("/key")) {
@@ -73,10 +92,10 @@ export default async (req: Request, context: Context) => {
     updated: Date.now(),
   });
   return Response.json({ ok: true });
-};
+}
 
 export const config: Config = {
   path: ["/api/push", "/api/push/key", "/api/push/test"],
-  method: ["GET", "POST", "DELETE"],
+  method: ["GET", "POST", "DELETE", "OPTIONS"],
   rateLimit: { action: "rate_limit", aggregateBy: ["ip", "domain"], windowSize: 60, windowLimit: 30 },
 };
