@@ -210,7 +210,7 @@ input[type=color]{padding:2px;height:36px}
 
 /* ===== calm paper restyle + motion (matches Spending Tracker) ===== */
 html{background:var(--bg)}
-body{background:transparent;position:relative;font-family:Roboto,system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14.5px;padding:env(safe-area-inset-top) 0 calc(84px + env(safe-area-inset-bottom));height:auto;min-height:100%}
+body{background:transparent;position:relative;font-family:Roboto,system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14.5px;padding:env(safe-area-inset-top) 0 calc(24px + env(safe-area-inset-bottom));height:auto;min-height:100%}
 body::before,body::after{content:"";position:fixed;z-index:-1;width:70vmax;height:70vmax;border-radius:50%;filter:blur(60px);pointer-events:none;will-change:transform}
 body::before{left:-25vmax;top:-30vmax;background:radial-gradient(circle,var(--blob1),transparent 65%);animation:drift1 26s ease-in-out infinite alternate}
 body::after{right:-30vmax;bottom:-25vmax;background:radial-gradient(circle,var(--blob2),transparent 65%);animation:drift2 32s ease-in-out infinite alternate}
@@ -274,24 +274,31 @@ input[type=range],input[type=checkbox]{box-shadow:none!important;padding:0}
 .hb div{height:6px}.hb b,.metrics,.dow,.ch em{font-variant-numeric:tabular-nums}
 .themes button{border-radius:14px;transition:transform .2s var(--spring),border-color .25s,box-shadow .25s}
 .box{border-radius:14px}
-.side{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;display:block;border:0;border-top:1px solid var(--line);background:var(--navbg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:10;padding:8px 8px calc(8px + env(safe-area-inset-bottom))}
-.navin{position:relative;max-width:720px;margin:0 auto}
-.nav{flex-direction:row;padding:0;gap:2px;justify-content:space-around}
-.nav a{flex:1;flex-direction:column;gap:3px;font-size:10.5px;font-weight:400;padding:6px 2px;text-align:center;position:relative;z-index:1;color:var(--mut);min-width:0;border-radius:12px;transition:color .25s,transform .2s var(--spring)}
-.nav a:hover{background:none}
+/* left drawer nav: hidden off-canvas, opened by swiping from the left edge (or the menu button) */
+.side{position:fixed;top:0;bottom:0;left:0;right:auto;width:min(280px,82vw);height:auto;display:flex;flex-direction:column;border:0;border-right:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow);z-index:15;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) env(safe-area-inset-left);transform:translateX(-105%);visibility:hidden;transition:transform .35s var(--ease),visibility 0s .35s;touch-action:pan-y}
+.side.open{transform:none;visibility:visible;transition:transform .35s var(--ease),visibility 0s}
+.side.drag{transition:none;visibility:visible}
+.side .brand,.side .who{display:flex}
+.sidescrim{position:fixed;inset:0;background:var(--scrim);z-index:14;opacity:0;pointer-events:none;transition:opacity .3s}
+.sidescrim.on{opacity:1;pointer-events:auto}
+.navin{position:relative;flex:1;overflow-y:auto;padding:10px 12px}
+.nav{flex-direction:column;padding:0;gap:4px}
+.nav a{flex-direction:row;gap:12px;font-size:14.5px;font-weight:400;padding:11px 12px;text-align:left;position:relative;z-index:1;color:var(--sub);border-radius:12px;transition:color .25s,transform .2s var(--spring)}
+.nav a:hover{background:var(--soft)}
 .nav a.on{background:none;color:var(--txt);font-weight:500}
-.nav a svg{width:22px;height:22px;transition:transform .45s var(--spring)}
-.nav a.on svg{transform:translateY(-2px) scale(1.12)}
-.nav a:active{transform:scale(.92)}
-.nav a span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.nav a em{position:absolute;top:0;right:10%;margin:0;padding:0 5px;font-size:9px}
-.navpill{position:absolute;top:0;bottom:0;left:0;width:60px;border-radius:14px;background:var(--tint);border:1px solid var(--line);transition:transform .5s var(--spring),width .3s var(--ease);pointer-events:none}
+.nav a svg{width:20px;height:20px}
+.nav a:active{transform:scale(.97)}
+.nav a span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav a em{position:static;margin-left:auto;padding:1px 8px;font-size:11px}
+.navpill{position:absolute;left:12px;right:12px;top:0;height:44px;border-radius:12px;background:var(--tint);border:1px solid var(--line);transition:transform .45s var(--spring),height .3s var(--ease);pointer-events:none}
+.menubtn{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--txt);box-shadow:var(--shadow);display:grid;place-items:center;padding:0;transition:transform .25s var(--spring)}
+.menubtn:active{transform:scale(.9)}
 .msync{display:block;margin:0 0 6px}
 .ov{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .ov.on{animation:fade .25s ease both}
 .modal{border-radius:20px 20px 0 0;animation:sheet .45s var(--spring);box-shadow:var(--shadow)}
 @media(min-width:700px){.modal{border-radius:20px}}
-#toast{display:block;opacity:0;pointer-events:none;border-radius:999px;font-weight:500;bottom:calc(96px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px) scale(.9);transition:opacity .3s,transform .45s var(--spring);box-shadow:var(--shadow)}
+#toast{display:block;opacity:0;pointer-events:none;border-radius:999px;font-weight:500;bottom:calc(72px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px) scale(.9);transition:opacity .3s,transform .45s var(--spring);box-shadow:var(--shadow)}
 #toast.on{opacity:1;transform:translateX(-50%)}
 #view.enter{animation:fade .45s var(--ease) both}
 #view.enter .card,#view.enter .kpi,#view.enter .ym{animation:up .6s var(--ease) both}
@@ -313,12 +320,14 @@ input[type=range],input[type=checkbox]{box-shadow:none!important;padding:0}
 </head>
 <body>
 <div class="app">
-  <aside class="side"><div class="hide"><div class="brand"><div class="logo"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><div><b>Fieldbook</b><small>Engineering Portal</small></div></div>
+  <div class="sidescrim" id="sideScrim"></div>
+  <aside class="side" id="side" aria-label="Navigation"><div><div class="brand"><div class="logo"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><div><b>Fieldbook</b><small>Engineering Portal</small></div></div>
     <div class="who"><div class="av" id="av">E</div><div><b id="whoName">Engineer</b><small class="local" id="sync"><i></i><span>Saved on this device</span></small></div></div>
   </div><div class="navin"><span class="navpill" id="navPill"></span><nav class="nav" id="nav"></nav></div>
   </aside>
   <main>
     <div class="top">
+      <button class="menubtn" id="menuBtn" type="button" aria-label="Open menu" aria-controls="side" aria-expanded="false" title="Menu (or swipe from the left edge)"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <div class="tt"><svg class="logo2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#27443a"/><stop offset="1" stop-color="#0f1b17"/></linearGradient></defs><rect width="512" height="512" rx="116" fill="url(#lg1)"/><g class="bk"><rect x="124" y="92" width="250" height="316" rx="34" fill="#efe8d6"/><path d="M124 126a34 34 0 0 1 34-34h34v316h-34a34 34 0 0 1-34-34z" fill="#7fc4ad"/><path d="M228 168h104M228 220h104M228 272h60" fill="none" stroke="#cfc5ab" stroke-width="14" stroke-linecap="round"/><path d="M158 150v200" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".4"/></g><g class="coin"><circle cx="352" cy="352" r="88" fill="#15251f"/><circle cx="352" cy="352" r="76" fill="#d9a871"/><circle cx="352" cy="352" r="54" fill="none" stroke="#8a5a2b" stroke-width="6" opacity=".4"/><path d="M324 354l20 20 38-44" fill="none" stroke="#6b4420" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/></g></svg><div><h1 id="title"></h1><small id="dateLine"></small></div></div>
       <button class="themebtn" id="themeBtn" type="button" data-act="theme" role="switch" aria-checked="false" aria-label="Dark mode" title="Switch light / dark mode"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
       <div class="tools"><input id="search" type="search" placeholder="Search tasks…" aria-label="Search tasks">
@@ -673,7 +682,7 @@ function curTheme(){let t=memTheme;if(!t)try{t=localStorage.getItem('fb-theme')}
 function applyTheme(){const d=curTheme()==='dark',r=document.documentElement;r.dataset.theme=d?'dark':'light';r.classList.toggle('is-dark',d);$('#themeBtn').setAttribute('aria-checked',String(d));const m=$('meta[name=theme-color]');if(m)m.content=d?'#121311':'#f6f3ec'}
 function setTheme(t){const r=document.documentElement;r.classList.add('theming');setTimeout(()=>r.classList.remove('theming'),500);memTheme=t;try{localStorage.setItem('fb-theme',t)}catch(e){}state.settings.theme=t}
 if(mq&&mq.addEventListener)mq.addEventListener('change',()=>render());
-function movePill(){const on=$('#nav a.on'),p=$('#navPill');if(!on||!p)return;p.style.width=on.offsetWidth+'px';p.style.transform='translateX('+on.offsetLeft+'px)'}
+function movePill(){const on=$('#nav a.on'),p=$('#navPill');if(!on||!p)return;p.style.height=on.offsetHeight+'px';p.style.transform='translateY('+on.offsetTop+'px)'}
 const io=('IntersectionObserver' in window)?new IntersectionObserver(es=>{let n=0;es.forEach(e=>{if(e.isIntersecting){e.target.style.transitionDelay=(n++*90)+'ms';e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.06}):null;
 function fx(){movePill();const v=$('#view'),k=route();if(k===fx.k)return;fx.k=k;if(noMotion())return;
  v.classList.remove('enter');void v.offsetWidth;v.classList.add('enter');let n=0;
@@ -787,7 +796,26 @@ document.addEventListener('dragleave',e=>{const el=e.target.closest&&e.target.cl
 document.addEventListener('drop',e=>{const el=e.target.closest&&e.target.closest('[data-drop]');if(!el)return;e.preventDefault();el.classList.remove('over');
  const t=state.tasks.find(x=>x.id===e.dataTransfer.getData('text/plain')),d=el.dataset.drop;if(!t)return;
  if(!d){if(!t.start)return;t.start='';t.end=''}else{if(t.start===d)return;const len=t.start?diff(endOf(t),t.start):0;t.start=d;t.end=addDays(d,len)}save()});
-window.addEventListener('hashchange',()=>{ui.q='';$('#search').value='';render();window.scrollTo(0,0)});
+window.addEventListener('hashchange',()=>{setSide(false);ui.q='';$('#search').value='';render();window.scrollTo(0,0)});
+/* ---------- left drawer: swipe from the left edge to open, swipe left / tap outside / Esc to close ---------- */
+function setSide(o){const sd=$('#side');sd.classList.remove('drag');sd.style.transform='';sd.classList.toggle('open',o);$('#sideScrim').classList.toggle('on',o);$('#sideScrim').style.opacity='';$('#menuBtn').setAttribute('aria-expanded',String(o));if(o)requestAnimationFrame(movePill)}
+$('#menuBtn').addEventListener('click',()=>setSide(true));
+$('#sideScrim').addEventListener('click',()=>setSide(false));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#side').classList.contains('open'))setSide(false)});
+(function(){const EDGE=24;let sw=null;
+ document.addEventListener('touchstart',e=>{if(e.touches.length!==1||$('#ov').classList.contains('on')){sw=null;return}
+  const t=e.touches[0],open=$('#side').classList.contains('open');
+  if(!open&&t.clientX>EDGE){sw=null;return}
+  sw={x:t.clientX,y:t.clientY,open,lock:0,dx:0,w:$('#side').offsetWidth,t:Date.now()}},{passive:true});
+ document.addEventListener('touchmove',e=>{if(!sw)return;const t=e.touches[0],dx=t.clientX-sw.x,dy=t.clientY-sw.y;
+  if(!sw.lock){if(Math.abs(dx)<8&&Math.abs(dy)<8)return;sw.lock=Math.abs(dx)>Math.abs(dy)?1:-1;if(sw.lock===1)$('#side').classList.add('drag')}
+  if(sw.lock!==1)return;e.preventDefault();sw.dx=dx;
+  const x=sw.open?Math.min(0,dx):Math.min(0,dx-sw.w);
+  $('#side').style.transform='translateX('+x+'px)';$('#sideScrim').classList.add('on');$('#sideScrim').style.opacity=String(1+x/sw.w)},{passive:false});
+ const end=()=>{if(!sw)return;const s=sw;sw=null;if(s.lock!==1)return;
+  const fast=Math.abs(s.dx)/Math.max(1,Date.now()-s.t)>.5;
+  setSide(s.open?!(s.dx<-s.w/3||(fast&&s.dx<0)):(s.dx>s.w/3||(fast&&s.dx>0)))};
+ document.addEventListener('touchend',end);document.addEventListener('touchcancel',end)})();
 let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{if(!$('#ov').classList.contains('on'))render()},200)});
 
 /* ---------- push reminders (installed app on your own hosting) ---------- */
