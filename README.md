@@ -14,3 +14,13 @@ Needs these environment variables on the Netlify project (already set on `fieldb
 
 On iPhone: open https://azharmj94.github.io/fieldbook/ in Safari, Share > Add to Home Screen, open Fieldbook from the icon,
 then Settings > Task Reminders > Turn reminders on.
+
+## BEM evidence (Route A, outcome-based PAE)
+
+- In a task, switch on **BEM entry** to record the competence elements it is evidence for (A1-D3, plus E1-E5 for the
+  written exam), your role level (Participating, Contributing or Leading), "My decision and why", "Outcome",
+  codes and standards, and evidence links (links only, e.g. Google Drive). "Suggest from pillars" ticks likely
+  elements from the pillar split.
+- The **BEM** page shows each element's entries, highest role, latest date and words of material against the
+  300-500 word narrative target, flags gaps, and exports a PDF or plain text to draft the Training & Experience Report.
+- Every task field must also be listed in `normalize()` in `public/index.html`, or it is dropped on save and sync.

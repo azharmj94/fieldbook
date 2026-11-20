@@ -308,6 +308,31 @@ input[type=range],input[type=checkbox]{box-shadow:none!important;padding:0}
 @keyframes sheet{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
 @keyframes settle{from{opacity:0;transform:translateY(-70px)}to{opacity:1;transform:none}}
 @keyframes coinin{from{opacity:0;transform:scale(.3) rotate(-90deg)}to{opacity:1;transform:none}}
+/* ===== BEM competence evidence ===== */
+:root{--aA:#1f6fc5;--aB:#1d7f5a;--aC:#7046c2;--aD:#9a5b0c;--aE:#b4432f}
+[data-theme=dark]{--aA:#7ab8f5;--aB:#6fcf9f;--aC:#b9a3f5;--aD:#e5b25d;--aE:#ef8a76}
+.elh,.evh{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:600;color:var(--mut);margin:2px 0 8px}
+.elg{margin-bottom:8px}
+.elg small{display:block;font-size:11px;color:var(--mut);margin-bottom:5px}
+.elg>div{display:flex;flex-wrap:wrap;gap:6px}
+.f label.elc{display:inline-flex;flex-direction:row;position:relative;gap:0;font-size:12.5px;color:var(--txt);cursor:pointer}
+.elc input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}
+.elc span{display:inline-block;min-width:46px;text-align:center;padding:7px 10px;border-radius:999px;border:1px solid var(--line);background:var(--panel);font-variant-numeric:tabular-nums;font-weight:500;transition:background .2s,color .2s,border-color .2s}
+.elc input:checked+span{background:var(--txt);border-color:var(--txt);color:var(--bg)}
+.elc input:focus-visible+span{box-shadow:0 0 0 3px var(--glow)}
+.elsel{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--sub);margin:4px 0 2px}
+.elsel b{font-weight:500;color:var(--txt);margin-right:6px}
+.evr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr) auto auto;gap:6px;margin:6px 0;align-items:center}
+.evr input.bad{border-color:var(--red);box-shadow:0 0 0 3px color-mix(in srgb,var(--red) 18%,transparent)}
+.elarea{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:500;margin:16px 0 2px}
+.elarea:first-child{margin-top:0}
+.elr{align-items:center}
+.elr>.tag{flex:none}
+.elr.on{background:var(--hot);border-radius:12px}
+.elcode{flex:none;min-width:40px;height:30px;border-radius:9px;display:grid;place-items:center;font-weight:700;font-size:12.5px;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);border:1px solid color-mix(in srgb,var(--c) 40%,transparent)}
+.elx{padding:0 0 8px 52px}
+.bemtxt{width:100%;min-height:50vh;font-size:12px;line-height:1.5}
+@media(max-width:430px){.nav a{font-size:9.5px}.elx{padding-left:8px}.evr{grid-template-columns:minmax(0,1fr) auto auto}.evr input[name=evu]{grid-column:1/-1;grid-row:2}}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
@@ -354,12 +379,22 @@ const toMin=t=>{const p=(t||'0:0').split(':');return +p[0]*60+ +p[1]};
 const fmt12=t=>{const m=toMin(t),h=Math.floor(m/60),mm=m%60;return((h+11)%12+1)+':'+p2(mm)+' '+(h<12?'AM':'PM')};
 const PIL=[['L','Leadership','#a78bfa'],['C','Core Engineering','#38bdf8'],['I','Improvements','#34d399'],['S','Safety','#fbbf24'],['M','Management','#818cf8']];
 const PM={};PIL.forEach(p=>PM[p[0]]=p);
+/* BEM Route A, outcome-based PAE: competence areas and elements (A-D in the Training & Experience Report, E in the written exam) */
+const AREAS=[['A','Knowledge and Understanding','var(--aA)'],['B','Practical Application','var(--aB)'],['C','Management and Leadership','var(--aC)'],['D','Communication and Interpersonal Skills','var(--aD)'],['E','Ethics and Professional Conduct (written exam)','var(--aE)']];
+const AM={};AREAS.forEach(a=>AM[a[0]]=a);
+const ELS=[['A1','Broaden knowledge and skills in own and allied fields'],['A2','Know the products or services you work on, to improve them'],['A3','Learn and apply codes, standards and guidelines'],['B1','Identify requirements, problems and opportunities'],['B2','Investigate, analyse and design engineering solutions'],['B3','Implement solutions and evaluate their effectiveness'],['C1','Plan for effective implementation'],['C2','Manage budget, people and other resources'],['C3','Lead teams and develop colleagues'],['C4','Promote quality improvement and best practice'],['D1','Communicate effectively at all levels'],['D2','Present and justify proposals and conclusions'],['D3','Personal and social skills, diversity and inclusion'],['E1','Comply with codes of conduct and ethics'],['E2','Manage and apply safe systems of work'],['E3','Work consistently with sustainable development'],['E4','Continuing professional development (CPD)'],['E5','Understand legal matters of the profession']];
+const ELC=ELS.map(e=>e[0]),ELN={};ELS.forEach(e=>ELN[e[0]]=e[1]);
+const ROLES=['Participating','Contributing','Leading'],RLV={Participating:1,Contributing:2,Leading:3},RLN=['None yet','Participating','Contributing','Leading'];
+const PEL={L:['C3','D3'],C:['B2','B3'],I:['C4'],S:['E2'],M:['C1','C2']};
+const wc=s=>(String(s||'').match(/\S+/g)||[]).length;
+const fixUrl=v=>{v=String(v||'').trim();return v&&!/^[a-z][a-z0-9+.-]*:/i.test(v)?'https://'+v:v};
+const isUrl=v=>typeof v==='string'&&v.length<=2000&&/^https?:\/\/[^\s<>"'`]+$/i.test(v);
 const PRI={Low:'#64748b',Medium:'#38bdf8',High:'#f59e0b',Critical:'#f87171'};
 const STC={Planned:'#38bdf8','In Progress':'#f59e0b','On Hold':'#94a3b8',Completed:'#34d399',Cancelled:'#f87171'};
-const IC={calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',overview:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',backlog:'<path d="M10 6h10M10 12h10M10 18h10"/><path d="M3.5 6l1 1 2-2M3.5 12l1 1 2-2M3.5 18l1 1 2-2"/>',analytics:'<path d="M4 20V4M4 20h17M9 16v-5M14 16V7M19 16v-3"/>',reports:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 17v-3M12 17v-6M15 17v-2"/>',config:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/>',pen:'<path d="M4 20h4L19 9l-4-4L4 16z"/>'};
-const ROUTES=['calendar','overview','backlog','analytics','reports','config','trash'];
-const NAVL={calendar:['Calendar Dashboard','Calendar'],overview:['KPIs & Overview','Overview'],backlog:['Task Backlog','Backlog'],analytics:['Analytics','Analytics'],reports:['PDF Reports','Reports'],config:['Settings','Settings'],trash:['Trash','Trash']};
-const TITLES={calendar:'Engineering Dashboard',overview:'KPIs & Overview',backlog:'Task Backlog',analytics:'Engineering Analytics & Radar',reports:'Performance Reports',config:'Settings & Preferences',trash:'Trash & Recovery'};
+const IC={calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',overview:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',backlog:'<path d="M10 6h10M10 12h10M10 18h10"/><path d="M3.5 6l1 1 2-2M3.5 12l1 1 2-2M3.5 18l1 1 2-2"/>',analytics:'<path d="M4 20V4M4 20h17M9 16v-5M14 16V7M19 16v-3"/>',reports:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 17v-3M12 17v-6M15 17v-2"/>',config:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/>',pen:'<path d="M4 20h4L19 9l-4-4L4 16z"/>',bem:'<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/>'};
+const ROUTES=['calendar','overview','backlog','analytics','reports','bem','config','trash'];
+const NAVL={calendar:['Calendar Dashboard','Calendar'],overview:['KPIs & Overview','Overview'],backlog:['Task Backlog','Backlog'],analytics:['Analytics','Analytics'],reports:['PDF Reports','Reports'],bem:['BEM Competence','BEM'],config:['Settings','Settings'],trash:['Trash','Trash']};
+const TITLES={calendar:'Engineering Dashboard',overview:'KPIs & Overview',backlog:'Task Backlog',analytics:'Engineering Analytics & Radar',reports:'Performance Reports',bem:'BEM Competence',config:'Settings & Preferences',trash:'Trash & Recovery'};
 const FIXHOL={'01-01':'New Year’s Day','05-01':'Labour Day','08-31':'National Day','09-16':'Malaysia Day','12-25':'Christmas Day'};
 const LS='engjournal.v2';
 
@@ -381,14 +416,16 @@ function normalize(o){const out=blank();if(!o||typeof o!=='object')return out;co
  if(ws.length)out.workspaces=ws;const ids=out.workspaces.map(w=>w.id);
  out.tasks=(Array.isArray(o.tasks)?o.tasks:[]).slice(0,MAXT).filter(t=>t&&typeof t==='object').map(t=>{const start=isDate(t.start)?t.start:'',end=start&&isDate(t.end)&&t.end>=start&&diff(t.end,start)<=366?t.end:start,pil={},src=t.pil&&typeof t.pil==='object'?t.pil:{};
   PIL.forEach(p=>{const v=has(src,p[0])?clamp(src[p[0]],0,100):0;if(v)pil[p[0]]=v});if(!Object.keys(pil).length)pil.C=100;
-  return{id:fresh(t.id),created:clamp(t.created,0,4e12),title:S(t.title,160).trim()||'Untitled task',desc:S(t.desc,4000),ws:oneOf(t.ws,ids,ids[0]),priority:oneOf(t.priority,Object.keys(PRI),'Medium'),status:oneOf(t.status,Object.keys(STC),'Planned'),pil,allDay:t.allDay===true,start,end,st:isTime(t.st)?t.st:'08:30',ft:isTime(t.ft)?t.ft:'17:30',progress:clamp(t.progress,0,100),notes:S(t.notes,8000),deleted:t.deleted?clamp(t.deleted,1,4e12):null}});
+  return{id:fresh(t.id),created:clamp(t.created,0,4e12),title:S(t.title,160).trim()||'Untitled task',desc:S(t.desc,4000),ws:oneOf(t.ws,ids,ids[0]),priority:oneOf(t.priority,Object.keys(PRI),'Medium'),status:oneOf(t.status,Object.keys(STC),'Planned'),pil,allDay:t.allDay===true,start,end,st:isTime(t.st)?t.st:'08:30',ft:isTime(t.ft)?t.ft:'17:30',progress:clamp(t.progress,0,100),notes:S(t.notes,8000),deleted:t.deleted?clamp(t.deleted,1,4e12):null,
+  bem:t.bem===true,el:Array.isArray(t.el)?ELC.filter(c=>t.el.includes(c)):[],role:oneOf(t.role,ROLES,''),why:S(t.why,4000),outcome:S(t.outcome,4000),codes:S(t.codes,600),
+  ev:(Array.isArray(t.ev)?t.ev:[]).filter(x=>x&&typeof x==='object'&&isUrl(S(x.url,2000).trim())).slice(0,12).map(x=>({label:S(x.label,80).trim(),url:S(x.url,2000).trim()}))}});
  const s=o.settings&&typeof o.settings==='object'?o.settings:{},d=out.settings;
  out.settings={name:S(s.name,40),theme:oneOf(s.theme,['dark','light'],d.theme),view:oneOf(s.view,['year','month','week','day','agenda'],d.view),holidays:s.holidays!==false,pillar:oneOf(s.pillar,PIL.map(p=>p[0]),d.pillar),priority:oneOf(s.priority,Object.keys(PRI),d.priority),metric:oneOf(s.metric,['count','done','hours'],d.metric),
   customHolidays:Array.isArray(s.customHolidays)?s.customHolidays.slice(0,300).filter(h=>h&&isDate(h.date)&&S(h.name,40).trim()).map(h=>({date:h.date,name:S(h.name,40).trim()})):d.customHolidays};
  out.active=oneOf(o.active,ids,'all');out.updated=clamp(o.updated,0,4e12);return out}
 let state=blank();
 try{const s=localStorage.getItem(LS);if(s)state=normalize(JSON.parse(s))}catch(e){}
-const ui={cur:today(),sel:today(),view:state.settings.view,bl:true,blq:'',blsort:'new',range:'year',q:'',rk:'week',rc:today()};
+const ui={cur:today(),sel:today(),view:state.settings.view,bl:true,blq:'',blsort:'new',range:'year',q:'',rk:'week',rc:today(),bemEl:''};
 
 /* ---------- storage, undo ---------- */
 let cloud=null,pushT=null,pushing=false,dirty=false,last=JSON.stringify(state),hist=[],fut=[];
@@ -437,7 +474,7 @@ const empty=(a,b)=>'<div class="empty">'+(b?'<b>'+a+'</b>'+b:a)+'</div>';
 const kpi=(l,v,s,w)=>'<div class="kpi '+(w?'warn':'')+'"><small>'+l+'</small><b>'+v+'</b><span>'+s+'</span></div>';
 function taskRow(t){const done=isDone(t),p=PM[dom(t)],w=wsOf(t.ws);
  const when=t.start?fmt(t.start)+(endOf(t)!==t.start?' – '+fmt(endOf(t)):'')+(t.allDay?' · All day':' · '+fmt12(t.st)+' – '+fmt12(t.ft))+' · '+hours(t)+'h':'Backlog';
- return'<div class="row'+(done?' done':'')+'" draggable="true" data-drag="'+t.id+'" data-act="edit" data-id="'+t.id+'"><button type="button" class="chk'+(done?' on':'')+'" data-act="toggle" data-id="'+t.id+'" aria-label="Mark complete" title="Mark complete">'+(done?'✓':'')+'</button><div class="rmain"><div class="rt">'+esc(t.title)+'</div>'+(t.desc?'<div class="rd">'+esc(t.desc)+'</div>':'')+'<div class="rm"><span class="tag" style="--c:'+p[2]+'">'+p[1]+'</span><span style="color:'+PRI[t.priority]+'">'+esc(t.priority)+'</span><span style="color:'+STC[t.status]+'">'+esc(t.status)+(t.progress&&!done?' '+t.progress+'%':'')+'</span><span class="'+(isLate(t)?'late':'')+'">'+when+(isLate(t)?' · Overdue':'')+'</span>'+(state.active==='all'&&w?'<span><i class="dot" style="background:'+esc(w.color)+'"></i>'+esc(w.name)+'</span>':'')+'</div></div></div>'}
+ return'<div class="row'+(done?' done':'')+'" draggable="true" data-drag="'+t.id+'" data-act="edit" data-id="'+t.id+'"><button type="button" class="chk'+(done?' on':'')+'" data-act="toggle" data-id="'+t.id+'" aria-label="Mark complete" title="Mark complete">'+(done?'✓':'')+'</button><div class="rmain"><div class="rt">'+esc(t.title)+'</div>'+(t.desc?'<div class="rd">'+esc(t.desc)+'</div>':'')+'<div class="rm"><span class="tag" style="--c:'+p[2]+'">'+p[1]+'</span><span style="color:'+PRI[t.priority]+'">'+esc(t.priority)+'</span><span style="color:'+STC[t.status]+'">'+esc(t.status)+(t.progress&&!done?' '+t.progress+'%':'')+'</span><span class="'+(isLate(t)?'late':'')+'">'+when+(isLate(t)?' · Overdue':'')+'</span>'+(state.active==='all'&&w?'<span><i class="dot" style="background:'+esc(w.color)+'"></i>'+esc(w.name)+'</span>':'')+(t.bem?'<span class="tag" style="--c:var(--clay)">BEM'+((t.el||[]).length?' · '+t.el.join(' '):'')+'</span>'+(t.role?'<span>'+esc(t.role)+'</span>':'')+((t.ev||[]).length?'<span>'+t.ev.length+' evidence link'+(t.ev.length===1?'':'s')+'</span>':''):'')+'</div></div></div>'}
 function radarSvg(vals,unit){const cx=160,cy=118,R=84,mx=Math.max(1,...vals);const pt=(i,r)=>{const a=-Math.PI/2+i*2*Math.PI/5;return[cx+r*Math.cos(a),cy+r*Math.sin(a)]};
  let g='';[.25,.5,.75,1].forEach(f=>{g+='<polygon class="ring" points="'+PIL.map((_,i)=>pt(i,R*f).map(n=>n.toFixed(1)).join(',')).join(' ')+'"/>'});
  PIL.forEach((p,i)=>{const e=pt(i,R),l=pt(i,R+13);g+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="var(--line)"/><text x="'+l[0].toFixed(1)+'" y="'+(l[1]+(i===0?-2:i===2||i===3?10:3)).toFixed(1)+'" text-anchor="'+(i===0?'middle':i<3?'start':'end')+'">'+p[1]+' · '+r1(vals[i])+(unit||'')+'</text>'});
@@ -511,7 +548,7 @@ V.config=()=>{const s=state.settings,sel=(k,opts)=>'<select data-set="'+k+'">'+o
 V.trash=()=>{const T=state.tasks.filter(t=>t.deleted).sort((a,b)=>b.deleted-a.deleted);
  return'<div class="card lead"><div><div class="eyebrow">Recovery Bin</div><h2>Recently Deleted Tasks</h2><p>Items remain recoverable here. Restore them or permanently remove them.</p></div><span class="tag" style="--c:#f87171">'+T.length+' task'+(T.length===1?'':'s')+' in trash</span></div>'
  +(T.map(t=>{const p=PM[dom(t)];return'<div class="card" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div style="flex:1;min-width:200px"><span class="tag" style="--c:'+p[2]+'">'+p[1]+'</span><div class="rt" style="margin-top:6px">'+esc(t.title)+'</div>'+(t.desc?'<div class="rd">'+esc(t.desc)+'</div>':'')+'<div class="rd">Deleted on '+dmy(iso(new Date(t.deleted)))+'</div></div><button class="btn sm" data-act="restore" data-id="'+t.id+'">Restore Task</button><button class="btn sm dan" data-act="erase" data-id="'+t.id+'">Erase</button></div>'}).join('')||'<div class="card">'+empty('Trash is empty.')+'</div>')};
-function searchView(){const q=ui.q.toLowerCase(),L=live().filter(t=>[t.title,t.desc,t.notes,(wsOf(t.ws)||{}).name].some(x=>x&&x.toLowerCase().includes(q)));
+function searchView(){const q=ui.q.toLowerCase(),L=live().filter(t=>[t.title,t.desc,t.notes,(wsOf(t.ws)||{}).name,t.why,t.outcome,t.codes,(t.el||[]).join(' ')].some(x=>x&&x.toLowerCase().includes(q)));
  return card('Search results for “'+esc(ui.q)+'”',L.map(taskRow).join('')||empty('No matching tasks.'),L.length+' found')}
 
 /* ---------- reports ---------- */
@@ -655,6 +692,141 @@ async function exportPdf(){const say=t=>{const e=$('#pdfMsg');if(e)e.textContent
   else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=m.file;document.body.appendChild(a);a.click();a.remove();say('PDF built. If the download did not start, downloads are not available in this view.')}
  }catch(e){say('The PDF was not saved — the download was cancelled or blocked.')}}
 
+/* ---------- BEM competence evidence (Route A, outcome-based PAE) ---------- */
+const evRow=(l,u)=>'<div class="evr"><input name="evl" maxlength="80" placeholder="Label, e.g. Calc sheet" aria-label="Evidence label" value="'+esc(l||'')+'"><input name="evu" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="2000" placeholder="https://drive.google.com/…" aria-label="Evidence link" value="'+esc(u||'')+'"><a class="btn sm ic evo'+(isUrl(fixUrl(u))?'':' hide')+'" href="'+(isUrl(fixUrl(u))?esc(fixUrl(u)):'#')+'" target="_blank" rel="noopener noreferrer" aria-label="Open link" title="Open link"><svg class="i" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/></svg></a><button type="button" class="btn sm ic" data-act="ev-del" aria-label="Remove link" title="Remove link">×</button></div>';
+const evRows=ev=>(ev&&ev.length?ev:[{}]).map(x=>evRow(x.label,x.url)).join('');
+function bemBox(v){const el=v.el||[];
+ return'<div class="box bembox"><h4>BEM Evidence · Route A PAE<span><label class="ck" style="margin:0"><input type="checkbox" name="bem"'+(v.bem?' checked':'')+'>BEM entry</label></span></h4>'
+ +'<div id="bemBody"'+(v.bem?'':' class="hide"')+'>'
+ +'<div class="elh"><span>Competence elements</span><button type="button" class="btn sm" data-act="bem-suggest">Suggest from pillars</button></div>'
+ +AREAS.map(a=>'<div class="elg"><small>'+a[0]+' · '+esc(a[1])+'</small><div>'+ELS.filter(e=>e[0][0]===a[0]).map(e=>'<label class="elc" title="'+esc(e[1])+'"><input type="checkbox" name="el" value="'+e[0]+'"'+(el.includes(e[0])?' checked':'')+'><span>'+e[0]+'</span></label>').join('')+'</div></div>').join('')
+ +'<div class="elsel" id="elSel"></div>'
+ +'<div class="f" style="margin-top:12px"><label>Your role level<select name="role">'+opts([['','Choose…']].concat(ROLES.map(r=>[r,r])),v.role||'')+'</select></label>'
+ +'<label>My decision and why<textarea name="why" maxlength="4000" placeholder="Options you considered, what you chose, and the engineering reasons">'+esc(v.why||'')+'</textarea></label>'
+ +'<label>Outcome (numbers)<textarea name="outcome" maxlength="4000" placeholder="Measurable result, e.g. downtime avoided, cost, deflection, comments closed">'+esc(v.outcome||'')+'</textarea></label>'
+ +'<label>Codes and standards used<input name="codes" maxlength="600" value="'+esc(v.codes||'')+'" placeholder="e.g. ASME B31.3; OSH (Plant Requiring CF) Regs 2024"></label></div>'
+ +'<div class="evh" style="margin-top:12px"><span>Evidence links</span><button type="button" class="btn sm" data-act="ev-add">+ Link</button></div><div id="evList">'+evRows(v.ev)+'</div>'
+ +'<div class="hint" style="text-align:left;margin-top:4px">Links only, e.g. a Google Drive file. The files stay where they are.</div></div></div>'}
+function bemSync(m){const b=m.querySelector('[name=bem]');if(!b)return;const body=$('#bemBody');if(body)body.classList.toggle('hide',!b.checked);
+ const sel=[...m.querySelectorAll('[name=el]:checked')].map(x=>x.value),box=$('#elSel');
+ if(box)box.innerHTML=sel.length?sel.map(c=>'<span><b>'+c+'</b>'+esc(ELN[c])+'</span>').join(''):'<span>Tap the elements this entry is evidence for.</span>';
+ m.querySelectorAll('.evr').forEach(r=>{const x=r.querySelector('[name=evu]'),a=r.querySelector('.evo'),v=x.value.trim(),f=fixUrl(v),ok=!!v&&isUrl(f);x.classList.toggle('bad',!!v&&!ok);if(a){a.classList.toggle('hide',!ok);if(ok)a.href=f}})}
+function bemSave(d){d.bem=!!d.bem;d.el=ELC.filter(c=>(d.el||[]).includes(c));
+ const L=d.evl||[],U=d.evu||[];let skip=0;d.ev=[];
+ U.forEach((u,i)=>{const l=String(L[i]||'').trim(),f=fixUrl(u);if(!u){if(l)skip++;return}if(isUrl(f)&&d.ev.length<12)d.ev.push({label:l.slice(0,80),url:f});else skip++});
+ delete d.evl;delete d.evu;
+ if(skip)toast(skip+' evidence link'+(skip===1?' was':'s were')+' not saved: add a full web address.')}
+function bemSuggest(){const m=$('#modal'),add=[];
+ PIL.forEach(p=>{const s=m.querySelector('[name=p_'+p[0]+']');if(s&&+s.value>=20)PEL[p[0]].forEach(c=>{const x=m.querySelector('[name=el][value='+c+']');if(x&&!x.checked){x.checked=true;add.push(c)}})});
+ formSync();toast(add.length?'Suggested '+add.join(', ')+' from your pillar split. Untick any that don’t fit.':'Nothing new to suggest from the pillar split.')}
+function evAdd(){const l=$('#evList');if(!l)return;if(l.querySelectorAll('.evr').length>=12){toast('Up to 12 links per entry.');return}
+ l.insertAdjacentHTML('beforeend',evRow());const r=l.lastElementChild;if(r)r.querySelector('input').focus()}
+function evDel(btn){const r=btn.closest('.evr'),l=$('#evList');if(r)r.remove();if(l&&!l.querySelector('.evr'))l.insertAdjacentHTML('beforeend',evRow());formSync()}
+document.addEventListener('change',e=>{const t=e.target;if(t&&t.name==='evu'&&t.value.trim()&&t.closest('#modal')){t.value=fixUrl(t.value);formSync()}});
+
+const bemWhen=t=>t.start?dmy(t.start)+(endOf(t)!==t.start?' to '+dmy(endOf(t)):''):'No date (backlog)';
+const bemMat=t=>wc(t.desc)+wc(t.why)+wc(t.outcome);
+function bemModel(){const T=scoped().filter(t=>t.bem).sort((a,b)=>{const x=a.start||'9999',y=b.start||'9999';return x<y?-1:x>y?1:(a.created||0)-(b.created||0)});
+ const per=ELS.map(e=>{const L=T.filter(t=>(t.el||[]).includes(e[0]));
+  return{code:e[0],name:e[1],area:e[0][0],T:L,n:L.length,words:L.reduce((s,t)=>s+bemMat(t),0),top:L.reduce((s,t)=>Math.max(s,RLV[t.role]||0),0),last:L.reduce((s,t)=>{const d=t.start?endOf(t):'';return d>s?d:s},'')}});
+ const AD=per.filter(x=>x.area!=='E'),w=wsOf(state.active);
+ return{T,per,AD,E:per.filter(x=>x.area==='E'),covered:AD.filter(x=>x.n).length,leading:AD.filter(x=>x.top===3).length,ready:AD.filter(x=>x.words>=300).length,
+  untagged:T.filter(t=>!(t.el||[]).length),scope:w?w.name:'All Workspaces',name:state.settings.name||'Engineer'}}
+/* status of an element's raw material against the 300-500 word narrative target: [label, colour key] */
+function bemStatus(x){if(x.area==='E')return x.n?['Logged','grn']:['None yet','mut'];if(!x.n)return['Gap','red'];if(x.words<300)return['Needs more','amb'];if(x.words<=500)return['On target','grn'];return['Trim to 500','acc']}
+const bemRole=x=>x.n?(x.top?RLN[x.top]:'Role not set'):'None yet';
+function elRow(x){const st=bemStatus(x),on=ui.bemEl===x.code;
+ return'<div class="row elr'+(on?' on':'')+'" data-act="bem-el" data-id="'+x.code+'" aria-expanded="'+on+'"><span class="elcode" style="--c:'+AM[x.area][2]+'">'+x.code+'</span><div class="rmain"><div class="rt">'+esc(x.name)+'</div><div class="rm"><span>'+x.n+' entr'+(x.n===1?'y':'ies')+'</span>'+(x.n?'<span>'+bemRole(x)+'</span>':'')+(x.last?'<span>Latest '+fmt(x.last)+' '+x.last.slice(0,4)+'</span>':'')+(x.area!=='E'?'<span>'+x.words+' words</span>':'')+'</div></div><span class="tag" style="--c:var(--'+st[1]+')">'+st[0]+'</span></div>'
+ +(on?'<div class="elx">'+(x.T.map(taskRow).join('')||empty('No entries tagged '+x.code+' yet.','Tap “+ BEM Entry”, or open a task, switch on BEM entry and tag '+x.code+'.'))+'</div>':'')}
+function radarN(labels,vals,max,aria){const n=labels.length,cx=170,cy=128,R=90,ang=i=>-Math.PI/2+i*2*Math.PI/n,pt=(i,r)=>[cx+r*Math.cos(ang(i)),cy+r*Math.sin(ang(i))],f=p=>p.map(v=>v.toFixed(1)).join(',');let g='';
+ for(let k=1;k<=max;k++)g+='<polygon class="ring" points="'+labels.map((_,i)=>f(pt(i,R*k/max))).join(' ')+'"/>';
+ labels.forEach((l,i)=>{const e=pt(i,R),q=pt(i,R+14),c=Math.cos(ang(i));g+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="var(--line)"/><text x="'+q[0].toFixed(1)+'" y="'+(q[1]+3.5).toFixed(1)+'" text-anchor="'+(Math.abs(c)<.25?'middle':c>0?'start':'end')+'">'+esc(l)+'</text>'});
+ const pts=vals.map((v,i)=>pt(i,R*Math.max(0,Math.min(v,max))/max));
+ g+='<polygon points="'+pts.map(f).join(' ')+'" fill="var(--acc)" fill-opacity=".28" stroke="var(--acc)" stroke-width="1.5"/>'+pts.map(p=>'<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.5" fill="var(--acc)" stroke="var(--panel)"/>').join('');
+ return'<svg class="radar" viewBox="0 0 340 256" role="img" aria-label="'+esc(aria)+'">'+g+'</svg>'}
+V.bem=()=>{const m=bemModel(),gaps=13-m.covered;
+ return'<div class="card lead"><div><div class="eyebrow">BEM Route A · Outcome-based PAE</div><h2>Competence Coverage</h2><p>'+esc(m.scope)+' · '+m.T.length+' BEM entr'+(m.T.length===1?'y':'ies')+'. Each element in your Training & Experience Report needs a 300–500 word narrative.</p></div><button class="btn pri" data-act="add-bem">+ BEM Entry</button><button class="btn" data-act="bem-pdf">Download PDF</button><button class="btn" data-act="bem-copy">Copy as Text</button><div id="bemMsg" style="flex-basis:100%;color:var(--mut);font-size:12.5px"></div></div>'
+ +'<div class="grid g5" style="margin-bottom:14px">'+kpi('BEM Entries',m.T.length,m.untagged.length?m.untagged.length+' not tagged yet':'All tagged')+kpi('Elements Covered',m.covered+'/13','Areas A–D')+kpi('Leading',m.leading+'/13','Elements with a Leading entry')+kpi('Gaps',gaps,gaps?'Elements with no evidence':'Every element covered',gaps)+kpi('Ready to Draft',m.ready+'/13','300+ words of material')+'</div>'
+ +'<div class="grid g2"><div>'+card('Elements A–D',AREAS.slice(0,4).map(a=>'<div class="elarea">'+a[0]+' · '+esc(a[1])+'</div>'+m.per.filter(x=>x.area===a[0]).map(elRow).join('')).join(''),'Tap an element')
+ +(m.untagged.length?card('BEM Entries Without Elements',m.untagged.map(taskRow).join(''),m.untagged.length+' to tag'):'')+'</div><div>'
+ +card('Highest Role Level per Element',(m.T.length?'':'<p style="color:var(--mut);font-size:12.5px;margin-bottom:6px">No BEM entries yet. Switch on “BEM entry” in a task to start.</p>')+radarN(m.AD.map(x=>x.code),m.AD.map(x=>x.top),3,'Highest role level recorded for each competence element, A1 to D3')+'<div class="legend"><span>Rings: 1 Participating · 2 Contributing · 3 Leading</span></div>')
+ +card('Area E · Written Exam',m.E.map(elRow).join(''),'Code of Professional Conduct')
+ +card('How Words Are Counted','<p style="color:var(--mut);font-size:12.5px;line-height:1.6">Material counts the words in each entry’s description, “My decision and why” and “Outcome”. An entry tagged to several elements counts toward each one. Use the export as raw material, then write each element’s final 300–500 word narrative in BEM/Form/PAE/10.</p>')+'</div></div>'};
+
+function bemText(m){const out=[],P=s=>out.push(s),fld=(k,v)=>{v=String(v||'').trim();if(v)P('   '+k+': '+v.replace(/\s*\n\s*/g,'\n      '))};
+ P('BEM TRAINING & EXPERIENCE EVIDENCE');P(m.name+' | Prepared '+dmy(today())+' | '+m.scope);P('First-draft material for BEM/Form/PAE/10. Write each element as a 300-500 word narrative.');P('');
+ P('Coverage: '+m.covered+'/13 elements covered | '+m.leading+' with a Leading entry | '+(13-m.covered)+' gaps | '+m.ready+'/13 with 300+ words of material');P('');
+ m.per.forEach(x=>{if(x.area==='E'&&!x.n)return;const st=bemStatus(x);
+  P(x.code+' - '+x.name);P('Material: '+(x.area==='E'?'':x.words+' words | ')+'Highest role: '+bemRole(x)+' | Status: '+st[0]);
+  if(!x.n)P('   No evidence logged yet.');
+  x.T.forEach(t=>{const w=wsOf(t.ws);P(' - '+t.title+' ('+[bemWhen(t),w?w.name:'',t.role||'Role not set',hours(t)+'h'].filter(Boolean).join(' | ')+')');
+   fld('What I did',t.desc);fld('Decision and why',t.why);fld('Outcome',t.outcome);fld('Codes and standards',t.codes);
+   if((t.ev||[]).length)fld('Evidence',t.ev.map(e=>(e.label?e.label+': ':'')+e.url).join('\n'))});
+  P('')});
+ return out.join('\n')}
+async function bemCopy(){const txt=bemText(bemModel()),say=s=>{const e=$('#bemMsg');if(e)e.textContent=s;toast(s)};
+ try{await navigator.clipboard.writeText(txt);say('Copied. Paste it into Word or Notes.')}
+ catch(e){showModal('<h3>BEM Evidence as Text</h3><p>Copying was blocked here. Select all of the text below and copy it.</p><textarea class="bemtxt" readonly>'+esc(txt)+'</textarea><div class="mact"><span class="sp"></span><button type="button" class="btn" data-act="m-close">Close</button></div>');const ta=$('#modal textarea');if(ta){ta.focus();ta.select()}}}
+
+async function buildBemPdf(L,m){const doc=await L.PDFDocument.create(),F=await doc.embedFont(L.StandardFonts.Helvetica),B=await doc.embedFont(L.StandardFonts.HelveticaBold),rgb=L.rgb;
+ const W=595.28,H=841.89,M=40,CW=W-2*M,TOP=64,BOT=H-50,cs=new Set(F.getCharacterSet());
+ const C={ink:'#0f172a',sub:'#475569',mut:'#64748b',line:'#d5dce6',band:'#eef2f6',navy:'#102a43',white:'#ffffff',head:'#d9e2ec'};
+ const SC={red:'#b91c1c',amb:'#a16207',grn:'#047857',acc:'#0f766e',mut:'#64748b'},AC={A:'#1f6fc5',B:'#1d7f5a',C:'#7046c2',D:'#9a5b0c',E:'#b4432f'};
+ const col=h=>{const n=parseInt(String(h).slice(1),16)||0;return rgb((n>>16)/255,(n>>8&255)/255,(n&255)/255)};
+ const clean=s=>Array.from(String(s==null?'':s)).map(ch=>cs.has(ch.codePointAt(0))?ch:/\s/.test(ch)?' ':'?').join('');
+ const fit=(s,f,size,max)=>{s=clean(s);if(!max||f.widthOfTextAtSize(s,size)<=max)return s;while(s.length>1&&f.widthOfTextAtSize(s+'...',size)>max)s=s.slice(0,-1);return s.replace(/\s+$/,'')+'...'};
+ let pg,y=TOP;
+ const tx=(s,x,yy,size,o)=>{o=o||{};const f=o.b?B:F,t=fit(s,f,size,o.max),w=f.widthOfTextAtSize(t,size);if(t)pg.drawText(t,{x:o.al==='r'?x-w:x,y:H-yy,size,font:f,color:col(o.c||C.ink)});return w};
+ const box=(x,yy,w,h,fill,stroke)=>{const o={x,y:H-yy-h,width:w,height:h};if(fill)o.color=col(fill);if(stroke){o.borderColor=col(stroke);o.borderWidth=.6}pg.drawRectangle(o)};
+ const ln=(x1,y1,x2,y2,c,th)=>pg.drawLine({start:{x:x1,y:H-y1},end:{x:x2,y:H-y2},thickness:th||.5,color:col(c||C.line)});
+ const wrap=(s,f,size,max)=>{const out=[];String(s==null?'':s).split(/\r?\n/).forEach(par=>{let cur='';clean(par).split(' ').forEach(w=>{if(!w)return;
+   while(w.length>1&&f.widthOfTextAtSize(w,size)>max){let k=w.length-1;while(k>1&&f.widthOfTextAtSize(w.slice(0,k),size)>max)k--;if(cur){out.push(cur);cur=''}out.push(w.slice(0,k));w=w.slice(k)}
+   const nx=cur?cur+' '+w:w;if(cur&&f.widthOfTextAtSize(nx,size)>max){out.push(cur);cur=w}else cur=nx});out.push(cur)});
+  while(out.length>1&&!out[out.length-1])out.pop();return out};
+ const page=first=>{pg=doc.addPage([W,H]);y=TOP;if(!first){tx('BEM Training & Experience Evidence',M,34,9,{b:1,c:C.navy});tx(m.name+'  |  '+m.scope,W-M,34,8,{c:C.sub,al:'r',max:260});ln(M,42,W-M,42,C.line,.8)}};
+ const need=h=>{if(y+h>BOT){page();return true}return false};
+
+ /* page 1: cover band, KPIs, coverage table */
+ page(true);box(0,0,W,104,C.navy);
+ tx('FIELDBOOK  |  BEM ROUTE A, OUTCOME-BASED PAE',M,30,7.5,{b:1,c:C.head});tx('Training & Experience Evidence',M,57,20,{b:1,c:C.white});
+ tx('First-draft material for BEM/Form/PAE/10, grouped by competence element',M,75,9,{c:C.head});
+ tx(m.name,W-M,30,11,{b:1,c:C.white,al:'r',max:200});tx('Prepared '+dmy(today()),W-M,44,8,{c:C.head,al:'r'});tx('Scope: '+m.scope,W-M,57,8,{c:C.head,al:'r',max:200});
+ const gaps=13-m.covered,kp=[['BEM ENTRIES',String(m.T.length),m.untagged.length?m.untagged.length+' not tagged yet':'All tagged'],['ELEMENTS COVERED',m.covered+'/13','Areas A to D'],['LEADING',m.leading+'/13','With a Leading entry'],['GAPS',String(gaps),gaps?'Elements with no evidence':'Every element covered'],['READY TO DRAFT',m.ready+'/13','300+ words of material']],kw=(CW-4*8)/5;
+ kp.forEach((k,i)=>{const x=M+i*(kw+8);box(x,118,kw,60,C.white,C.line);tx(k[0],x+9,134,6.5,{b:1,c:C.sub,max:kw-14});tx(k[1],x+9,157,17,{b:1,c:k[0]==='GAPS'&&gaps?SC.red:C.ink});tx(k[2],x+9,171,6.5,{c:C.sub,max:kw-14})});
+ y=196;tx('Coverage by element',M,y+12,12,{b:1});tx('Material = words in description, decision and outcome',W-M,y+12,7.5,{c:C.sub,al:'r'});y+=22;
+ const X={code:M+8,name:M+38,n:M+278,role:M+288,last:M+362,words:M+450,st:M+458};
+ box(M,y,CW,18,C.band);[['ELEMENT',X.code],['HIGHEST ROLE',X.role],['LATEST',X.last],['STATUS',X.st]].forEach(h=>tx(h[0],h[1],y+12,6.8,{b:1,c:C.sub}));tx('ENTRIES',X.n,y+12,6.8,{b:1,c:C.sub,al:'r'});tx('WORDS',X.words,y+12,6.8,{b:1,c:C.sub,al:'r'});y+=22;
+ AREAS.forEach(a=>{tx(a[0]+'  '+a[1].toUpperCase(),X.code,y+9,6.8,{b:1,c:AC[a[0]]});y+=13;
+  m.per.filter(x=>x.area===a[0]).forEach((x,i)=>{const st=bemStatus(x);if(i%2)box(M,y-1,CW,16,'#f8fafc');
+   tx(x.code,X.code,y+10,8.5,{b:1,c:AC[x.area]});tx(x.name,X.name,y+10,8.2,{max:X.n-X.name-30});tx(String(x.n),X.n,y+10,8.2,{al:'r'});tx(bemRole(x),X.role,y+10,8.2,{c:x.top?C.ink:C.mut,max:X.last-X.role-6});
+   tx(x.last?dmy(x.last):'-',X.last,y+10,8.2,{c:x.last?C.ink:C.mut});tx(x.area==='E'?'-':String(x.words),X.words,y+10,8.2,{al:'r',c:x.area==='E'?C.mut:C.ink});tx(st[0],X.st,y+10,8.2,{b:1,c:SC[st[1]],max:W-M-X.st});y+=16});y+=4});
+ y+=6;wrap('Each element in the Training & Experience Report needs a 300-500 word narrative: what you did, why you chose it, and the measurable result. Use the entries on the following pages as raw material. Examiners also check that the role you state for each area matches your evidence. Area E is assessed in the 1.5-hour Code of Professional Conduct exam, not in this report.',F,8.5,CW).forEach(l=>{need(12);tx(l,M,y+9,8.5,{c:C.sub});y+=12});
+
+ /* following pages: entries grouped by element (A-D always shown, E only when logged) */
+ page();
+ m.per.forEach(x=>{if(x.area==='E'&&!x.n)return;const st=bemStatus(x),ac=AC[x.area];need(70);
+  box(M,y,CW,26,C.band);box(M,y,4,26,ac);tx(x.code,M+12,y+17,11,{b:1,c:ac});tx(x.name,M+42,y+17,10.5,{b:1,max:CW-200});
+  tx((x.area==='E'?'':x.words+' words  |  ')+bemRole(x)+'  |  '+st[0],W-M-10,y+17,8.2,{b:1,c:SC[st[1]],al:'r'});y+=34;
+  if(!x.n){tx('No evidence logged yet.',M+12,y+8,9,{c:C.mut});y+=24;return}
+  x.T.forEach((t,i)=>{const w=wsOf(t.ws);need(48);if(i)ln(M+12,y-4,W-M,y-4,C.line,.5);
+   tx(t.title,M+12,y+10,10,{b:1,max:CW-24});y+=15;
+   tx([bemWhen(t),w?w.name:'',t.role||'Role not set',hours(t)+'h',t.status].filter(Boolean).join('  |  '),M+12,y+8,8,{c:C.sub,max:CW-24});y+=15;
+   [['What I did',t.desc],['Decision and why',t.why],['Outcome',t.outcome],['Codes and standards',t.codes],['Evidence',(t.ev||[]).map(e=>(e.label?e.label+': ':'')+e.url).join('\n')]].forEach(fl=>{const v=String(fl[1]||'').trim();if(!v)return;
+    need(26);tx(fl[0].toUpperCase(),M+12,y+8,6.8,{b:1,c:C.sub});y+=12;wrap(v,F,9,CW-24).forEach(l=>{need(12);if(l)tx(l,M+12,y+8,9,{c:C.ink});y+=12});y+=4});
+   y+=10});
+  y+=6});
+ const pages=doc.getPages();pages.forEach((q,i)=>{pg=q;ln(M,H-32,W-M,H-32,C.line,.6);tx('Fieldbook  |  BEM evidence: draft material, not a submission',M,H-20,7,{c:C.sub});tx('Page '+(i+1)+' of '+pages.length,W-M,H-20,7,{c:C.sub,al:'r'})});
+ doc.setTitle(clean('BEM Training & Experience Evidence - '+m.name));doc.setAuthor(clean(m.name));doc.setCreator('Fieldbook');
+ return doc.save()}
+async function bemPdf(){const say=t=>{const e=$('#bemMsg');if(e)e.textContent=t;toast(t)};
+ if(!window.PDFLib){say('The PDF engine did not load. Reload the page and try again.');return}
+ say('Building PDF…');let bytes;const file='fieldbook-bem-evidence-'+today()+'.pdf';
+ try{bytes=await buildBemPdf(window.PDFLib,bemModel())}catch(e){say('Could not build the PDF ('+((e&&e.message)||'unknown error')+').');return}
+ try{const blob=new Blob([bytes],{type:'application/pdf'}),dl=window.claude&&typeof window.claude.use==='function'?await window.claude.use('downloads'):null;
+  if(dl){try{await dl.save({filename:file,data:blob})}catch(e){if(/data|type|blob|argument/i.test(String(e&&e.message)))await dl.save({filename:file,data:bytes});else throw e}say('Saved: '+file)}
+  else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=file;document.body.appendChild(a);a.click();a.remove();say('PDF built. If the download did not start, downloads are not available in this view.')}
+ }catch(e){say('The PDF was not saved — the download was cancelled or blocked.')}}
+
 /* ---------- render ---------- */
 function route(){const h=(location.hash||'').slice(1);return ROUTES.includes(h)?h:'calendar'}
 function renderView(){$('#view').innerHTML=ui.q?searchView():V[route()]()}
@@ -686,8 +858,8 @@ let onSave=null,onDel=null,onDup=null;
 function showModal(html,save_,del_,dup_){onSave=save_;onDel=del_;onDup=dup_;$('#modal').innerHTML=html;$('#ov').classList.add('on')}
 function closeForm(){$('#ov').classList.remove('on');onSave=onDel=onDup=null}
 const opts=(list,v)=>list.map(o=>'<option value="'+esc(o[0])+'"'+(String(o[0])===String(v)?' selected':'')+'>'+esc(o[1])+'</option>').join('');
-function taskForm(id,date){if(!id&&state.tasks.length>=MAXT)return;const s=state.settings,t=id?state.tasks.find(x=>x.id===id):null;if(id&&!t)return;
- const v=t||{title:'',desc:'',ws:state.active!=='all'?state.active:state.workspaces[0].id,priority:s.priority,status:'Planned',pil:{[s.pillar]:100},allDay:false,start:date||'',end:date||'',st:'08:30',ft:'17:30',progress:0,notes:''};
+function taskForm(id,date,pre){if(!id&&state.tasks.length>=MAXT)return;const s=state.settings,t=id?state.tasks.find(x=>x.id===id):null;if(id&&!t)return;
+ const v=t||{title:'',desc:'',ws:state.active!=='all'?state.active:state.workspaces[0].id,priority:s.priority,status:'Planned',pil:{[s.pillar]:100},allDay:false,start:date||'',end:date||'',st:'08:30',ft:'17:30',progress:0,notes:'',bem:false,el:[],role:'',why:'',outcome:'',codes:'',ev:[]};if(!t&&pre)Object.assign(v,pre);
  showModal('<h3>'+(t?'Edit Engineering Task':'Create Engineering Task')+'</h3><p>Plan an activity with start and finish times and an auto-calculated duration</p><div class="f">'
  +'<label>Task Title *<input name="title" required maxlength="160" value="'+esc(v.title)+'" placeholder="e.g. Calibrate pyrometer sensor on Furnace 3"></label>'
  +'<label>Task Description<textarea name="desc" maxlength="4000" placeholder="Describe objectives, parameters, equipment and scope…">'+esc(v.desc)+'</textarea></label>'
@@ -695,11 +867,11 @@ function taskForm(id,date){if(!id&&state.tasks.length>=MAXT)return;const s=state
  +'<div class="box"><h4>Engineering Pillar Distribution <b id="pilTot"></b><span><button type="button" class="btn sm" data-act="balance">Auto-Balance 100%</button><button type="button" class="btn sm" data-act="eq20">Equal 20%</button></span></h4>'+PIL.map(p=>'<div class="pr"><span><i class="dot" style="background:'+p[2]+'"></i>'+p[1]+'</span><input type="range" name="p_'+p[0]+'" min="0" max="100" step="5" value="'+((v.pil||{})[p[0]]||0)+'" aria-label="'+p[1]+' percent"><output></output><button type="button" class="btn sm" data-act="p100" data-id="'+p[0]+'">100%</button></div>').join('')+'</div>'
  +'<div class="box"><h4>Schedule & Clock Period<span><label class="ck" style="margin:0"><input type="checkbox" name="allDay"'+(v.allDay?' checked':'')+'>All-day activity</label></span></h4><div class="f"><label class="h">Start Date (blank = Backlog)<input type="date" name="start" value="'+esc(v.start)+'"></label><label class="h">Finish Date<input type="date" name="end" value="'+esc(v.end||'')+'"></label><label class="h">Start Time<input type="time" name="st" step="300" value="'+esc(v.st)+'"></label><label class="h">Finish Time<input type="time" name="ft" step="300" value="'+esc(v.ft)+'"></label></div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">'+[['08:30','17:30','8:30 AM – 5:30 PM (8h)'],['08:30','12:30','8:30 AM – 12:30 PM (4h)'],['13:30','17:30','1:30 PM – 5:30 PM (4h)']].map(p=>'<button type="button" class="btn sm" data-act="preset" data-id="'+p[0]+','+p[1]+'">'+p[2]+'</button>').join('')+'</div><div class="dur" id="durTxt"></div></div>'
  +'<label>Task Completion Progress <output id="progOut" style="font-family:var(--mono);color:var(--acc2)"></output><input type="range" name="progress" min="0" max="100" step="5" value="'+(v.progress||0)+'"></label>'
- +'<label>Engineering Notes & Observations<textarea name="notes" maxlength="8000" placeholder="Technical specs, serial numbers, observations, next steps…">'+esc(v.notes)+'</textarea></label></div>'
+ +'<label>Engineering Notes & Observations<textarea name="notes" maxlength="8000" placeholder="Technical specs, serial numbers, observations, next steps…">'+esc(v.notes)+'</textarea></label>'+bemBox(v)+'</div>'
  +'<div class="mact">'+(t?'<button type="button" class="btn dan" data-act="m-del">Delete</button><button type="button" class="btn" data-act="m-dup">Duplicate</button>':'')+'<span class="sp"></span><button type="button" class="btn" data-act="m-close">Cancel</button><button class="btn pri">'+(t?'Save Task':'Create Task')+'</button></div>',
  d=>{const pil={};let sum=0;PIL.forEach(p=>{pil[p[0]]=+d['p_'+p[0]]||0;sum+=pil[p[0]];delete d['p_'+p[0]]});
   if(!sum)pil[s.pillar]=100;else if(sum!==100){let acc=0,big=PIL[0][0];PIL.forEach(p=>{pil[p[0]]=Math.round(pil[p[0]]/sum*100);acc+=pil[p[0]];if(pil[p[0]]>pil[big])big=p[0]});pil[big]+=100-acc}
-  d.pil=pil;d.allDay=!!d.allDay;d.progress=+d.progress||0;if(!d.start)d.end='';else if(!d.end||d.end<d.start)d.end=d.start;
+  d.pil=pil;d.allDay=!!d.allDay;bemSave(d);d.progress=+d.progress||0;if(!d.start)d.end='';else if(!d.end||d.end<d.start)d.end=d.start;
   if(d.status==='Completed')d.progress=100;else if(d.progress===100)d.status='Completed';
   if(t)Object.assign(t,d);else state.tasks.push(Object.assign({id:uid(),created:Date.now()},d))},
  t?()=>{t.deleted=Date.now()}:null,
@@ -711,7 +883,7 @@ function formSync(){const m=$('#modal'),g=n=>m.querySelector('[name="'+n+'"]');i
  $('#progOut').textContent=g('progress').value+'%';
  const ad=g('allDay').checked,s=g('start').value,e=g('end').value||s;g('st').disabled=g('ft').disabled=ad;
  const pd=perDay(g('st').value,g('ft').value,ad),n=s?Math.max(1,diff(e<s?s:e,s)+1):1,lunch=!ad&&toMin(g('st').value)<810&&toMin(g('ft').value)>750;
- $('#durTxt').innerHTML=(ad?'<span>All day (counted as 8h per day)</span>':'<span>Task period: '+fmt12(g('st').value)+' → '+fmt12(g('ft').value)+'</span>'+(lunch?'<span>Lunch 12:30–1:30 PM (−1h)</span>':''))+(s?'':'<span>No start date — goes to Backlog</span>')+'<span>Auto-calculated duration: <b>'+r1(pd*n)+'h</b>'+(n>1?' ('+n+' days)':'')+'</span>'}
+ $('#durTxt').innerHTML=(ad?'<span>All day (counted as 8h per day)</span>':'<span>Task period: '+fmt12(g('st').value)+' → '+fmt12(g('ft').value)+'</span>'+(lunch?'<span>Lunch 12:30–1:30 PM (−1h)</span>':''))+(s?'':'<span>No start date — goes to Backlog</span>')+'<span>Auto-calculated duration: <b>'+r1(pd*n)+'h</b>'+(n>1?' ('+n+' days)':'')+'</span>';bemSync(m)}
 function wsForm(id){const w=id?wsOf(id):null,v=w||{name:'',desc:'',color:['#f97316','#3b82f6','#10b981','#8b5cf6','#ec4899','#eab308'][state.workspaces.length%6]};
  showModal('<h3>'+(w?'Edit Workspace':'New Workspace')+'</h3><p>Workspaces group tasks by area, plant or project</p><div class="f"><label>Name *<input name="name" required maxlength="40" value="'+esc(v.name)+'" placeholder="e.g. Boiler House"></label><label>Description<input name="desc" maxlength="120" value="'+esc(v.desc||'')+'"></label><label class="h">Colour<input type="color" name="color" value="'+esc(v.color)+'"></label></div><div class="mact">'+(w&&state.workspaces.length>1?'<button type="button" class="btn dan" data-act="m-del">Delete</button>':'')+'<span class="sp"></span><button type="button" class="btn" data-act="m-close">Cancel</button><button class="btn pri">Save</button></div>',
  d=>{if(w)Object.assign(w,d);else state.workspaces.push(Object.assign({id:uid()},d))},
@@ -720,7 +892,7 @@ function wsForm(id){const w=id?wsOf(id):null,v=w||{name:'',desc:'',color:['#f973
 
 function sample(){const td=today(),W=state.workspaces,w=i=>W[i%W.length].id,T=(title,desc,wi,priority,status,pil,s,e,st,ft,progress)=>({id:uid(),created:Date.now(),title,desc,ws:w(wi),priority,status,pil,allDay:false,start:s===null?'':addDays(td,s),end:s===null?'':addDays(td,e),st,ft,progress,notes:''});
  state.tasks.push(T('Burner tuning and flue gas analysis','Check excess air and adjust burner settings.',0,'High','Completed',{C:80,S:20},-9,-9,'08:30','12:30',100),T('Monthly safety walkdown','Guarding, housekeeping and permit compliance.',3,'Medium','Completed',{S:70,L:30},-6,-6,'13:30','17:30',100),T('Pressure test on return line','Hydrostatic test and wall thickness survey.',2,'Critical','In Progress',{C:60,S:40},-1,1,'08:30','17:30',50),T('Maintenance planning meeting','Weekly scope and resource review.',3,'Low','Planned',{M:60,L:40},0,0,'10:00','11:00',0),T('Valve replacement on gas line','Isolate, replace and leak test.',1,'High','Planned',{C:100},2,2,'08:30','17:30',0),T('Coach junior technician on alignment','Laser alignment practice on spare pump.',0,'Medium','Planned',{L:80,C:20},4,4,'13:30','17:30',0),T('Energy saving study – insulation','Survey hot surfaces and estimate savings.',3,'Medium','On Hold',{I:80,M:20},7,9,'08:30','17:30',20),T('Update spare parts list','',2,'Low','Planned',{M:100},null,null,'08:30','17:30',0),T('Review vibration trend report','',0,'Medium','Planned',{C:60,I:40},null,null,'08:30','17:30',0))}
-function csv(){const q=v=>{v=String(v==null?'':v);if(/^[=+\-@\t\r]/.test(v))v="'"+v;return'"'+v.replace(/"/g,'""')+'"'};return[['Title','Workspace','Status','Priority','Start','Finish','Start Time','Finish Time','Hours','Progress %'].concat(PIL.map(p=>p[1]+' %'),['Description','Notes'])].concat(live().map(t=>[t.title,(wsOf(t.ws)||{}).name,t.status,t.priority,t.start,t.end,t.allDay?'All day':t.st,t.allDay?'':t.ft,hours(t),t.progress].concat(PIL.map(p=>(t.pil||{})[p[0]]||0),[t.desc,t.notes]))).map(r=>r.map(q).join(',')).join('\n')}
+function csv(){const q=v=>{v=String(v==null?'':v);if(/^[=+\-@\t\r]/.test(v))v="'"+v;return'"'+v.replace(/"/g,'""')+'"'};return[['Title','Workspace','Status','Priority','Start','Finish','Start Time','Finish Time','Hours','Progress %'].concat(PIL.map(p=>p[1]+' %'),['Description','Notes','BEM Entry','BEM Elements','Role Level','Decision and Why','Outcome','Codes and Standards','Evidence Links'])].concat(live().map(t=>[t.title,(wsOf(t.ws)||{}).name,t.status,t.priority,t.start,t.end,t.allDay?'All day':t.st,t.allDay?'':t.ft,hours(t),t.progress].concat(PIL.map(p=>(t.pil||{})[p[0]]||0),[t.desc,t.notes,t.bem?'Yes':'No',(t.el||[]).join(' '),t.role||'',t.why||'',t.outcome||'',t.codes||'',(t.ev||[]).map(e=>(e.label?e.label+': ':'')+e.url).join(' ; ')]))).map(r=>r.map(q).join(',')).join('\n')}
 function copy(txt,ok){const m=$('#bmsg');try{navigator.clipboard.writeText(txt).then(()=>{m.textContent=ok},()=>{m.textContent='Copy was blocked by the browser.'})}catch(x){m.textContent='Copy was blocked by the browser.'}}
 
 function toast(m){const el=$('#toast');el.textContent=m;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('on'),3500)}
@@ -760,6 +932,13 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if
  else if(a==='rm-test')rmTest();
  else if(a==='copy-json')copy(JSON.stringify(state),'Backup copied — paste it somewhere safe.');
  else if(a==='restore-json'){const m=$('#bmsg');try{const raw=$('#restoreTxt').value;if(raw.length>3e6)throw 0;const o=JSON.parse(raw);if(!o||typeof o!=='object'||!Array.isArray(o.tasks))throw 0;state=normalize(o);save();$('#bmsg').textContent='Backup restored.'}catch(x){m.textContent='That text is not a valid backup.'}}
+ else if(a==='add-bem')taskForm(null,today(),{bem:true,el:ui.bemEl?[ui.bemEl]:[]});
+ else if(a==='bem-el'){ui.bemEl=ui.bemEl===id?'':(id||'');renderView()}
+ else if(a==='bem-suggest')bemSuggest();
+ else if(a==='ev-add')evAdd();
+ else if(a==='ev-del')evDel(el);
+ else if(a==='bem-pdf')bemPdf();
+ else if(a==='bem-copy')bemCopy();
  else if(a==='m-close')closeForm();
  else if(a==='m-del'){if(onDel){onDel();closeForm();save()}}
  else if(a==='m-dup'){if(onDup){onDup();closeForm();save()}}
@@ -770,7 +949,7 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if
 });
 $('#ov').addEventListener('click',e=>{if(e.target===$('#ov'))closeForm()});
 $('#modal').addEventListener('input',formSync);
-$('#modal').addEventListener('submit',e=>{e.preventDefault();const d={};new FormData($('#modal')).forEach((v,k)=>{d[k]=typeof v==='string'?v.trim():v});const r=onSave?onSave(d):0;closeForm();if(r!==false)save()});
+$('#modal').addEventListener('submit',e=>{e.preventDefault();const d={};const fd=new FormData($('#modal'));fd.forEach((v,k)=>{d[k]=typeof v==='string'?v.trim():v});['el','evl','evu'].forEach(k=>{if(fd.has(k))d[k]=fd.getAll(k).map(v=>String(v).trim())});const r=onSave?onSave(d):0;closeForm();if(r!==false)save()});
 document.addEventListener('input',e=>{const t=e.target;if(t.id==='search'){ui.q=t.value.trim();renderView()}else if(t.id==='blFilter'){ui.blq=t.value;const l=$('#blList');if(l)l.innerHTML=blList()}});
 document.addEventListener('change',e=>{const t=e.target;
  if(t.id==='yearSel'){ui.cur=t.value+ui.cur.slice(4);renderView()}
