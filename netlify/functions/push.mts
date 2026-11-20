@@ -34,6 +34,13 @@ function okEndpoint(e: unknown): e is string {
     return u.protocol === "https:" && /(^|\.)(push\.apple\.com|googleapis\.com|mozilla\.com|mozaws\.net|windows\.com|notify\.windows\.com)$/.test(u.hostname);
   } catch { return false; }
 }
+// A real browser subscription carries a 65-byte P-256 public key (starts with 0x04) and a 16-byte auth secret.
+// Rejecting anything else stops junk entries that could never receive a push from filling the device slots.
+function okKeys(k: any) {
+  const bytes = (v: unknown) => { if (typeof v !== "string" || v.length > 200 || !/^[A-Za-z0-9_-]+=*$/.test(v)) return null; return Buffer.from(v, "base64url"); };
+  const p = bytes(k?.p256dh), a = bytes(k?.auth);
+  return !!p && p.length === 65 && p[0] === 4 && !!a && a.length === 16;
+}
 function cleanQuiet(q: any) {
   const h = (v: any, d: number) => (Number.isInteger(v) && v >= 0 && v <= 23 ? v : d);
   return { on: q?.on !== false, start: h(q?.start, 22), end: h(q?.end, 7) };
@@ -78,7 +85,7 @@ async function handle(req: Request): Promise<Response> {
   }
 
   const sub = body?.subscription;
-  if (!sub || !okEndpoint(sub.endpoint) || typeof sub.keys?.p256dh !== "string" || typeof sub.keys?.auth !== "string") return bad("Invalid subscription.");
+  if (!sub || !okEndpoint(sub.endpoint) || !okKeys(sub.keys)) return bad("Invalid subscription.");
   const s = store(), k = keyFor(sub.endpoint);
   const existing = await s.get(k);
   if (!existing) {

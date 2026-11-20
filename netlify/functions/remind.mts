@@ -31,7 +31,8 @@ export default async () => {
       }), { TTL: 3 * 3600, urgency: "normal" });
       sent++;
     } catch (e: any) {
-      if (e?.statusCode === 404 || e?.statusCode === 410) { await store.delete(key); removed++; }
+      // 404/410: the device unsubscribed. 400: the push service rejects this subscription as malformed.
+      if ([400, 404, 410].includes(e?.statusCode)) { await store.delete(key); removed++; }
       else console.log("push failed", e?.statusCode, e?.body || e?.message);
     }
   }

@@ -1,2 +1,7 @@
 node_modules
 .netlify
+
+# Secrets: never commit these. Real values live in Netlify > Site configuration > Environment variables.
+.env
+.env.*
+!.env.example
