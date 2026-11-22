@@ -13,11 +13,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Fieldbook">
 <title>Fieldbook</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f6f3ec;--panel:#fffdf8;--panel2:#f2eee4;--inp:#f2eee4;--line:#e3dccd;--txt:#1d1b16;--sub:#4a463d;--mut:#6b665a;--acc:#2f6f5e;--acc2:#2f6f5e;--onacc:#fffdf8;--clay:#a9743f;--red:#b4432f;--amb:#a86a12;--grn:#2c7a57;
  --hot:#e4efe9;--tint:#ece7db;--soft:#1d1b1612;--badbg:#f8e6e0;--badline:#e3b5a9;--glow:#2f6f5e33;--navbg:#f6f3ece8;--scrim:#1d1b1666;--shadow:0 1px 2px #1d1b160a,0 12px 32px -18px #1d1b1633;--blob1:#2f6f5e26;--blob2:#d9a87133;
- --ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);--mono:Roboto,system-ui,-apple-system,'Segoe UI',sans-serif;color-scheme:light}
+ --ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.2,.7,.2,1);--mono:Roboto,system-ui,-apple-system,'Segoe UI',sans-serif;color-scheme:light}
 [data-theme=dark]{--bg:#121311;--panel:#1a1b18;--panel2:#21231f;--inp:#21231f;--line:#30322c;--txt:#ecebe4;--sub:#c9c7bc;--mut:#a09e92;--acc:#7fc4ad;--acc2:#7fc4ad;--onacc:#121311;--clay:#d9a871;--red:#ef8a76;--amb:#e5b25d;--grn:#6fcf9f;
  --hot:#1f302a;--tint:#252722;--soft:#ecebe414;--badbg:#3a1e19;--badline:#6b3329;--glow:#7fc4ad40;--navbg:#121311e8;--scrim:#000000a6;--shadow:0 1px 2px #0006,0 14px 34px -18px #000c;--blob1:#7fc4ad1f;--blob2:#d9a8711a;color-scheme:dark}
 *{box-sizing:border-box}
@@ -32,16 +32,16 @@ h1,h2,h3,p{margin:0}
 .brand{display:flex;align-items:center;gap:11px;padding:16px;border-bottom:1px solid var(--line)}
 .logo{width:36px;height:36px;border-radius:10px;background:var(--acc);display:grid;place-items:center;flex:none;color:var(--onacc)}
 .brand b{display:block;font-size:15px;line-height:1.2}
-.brand small{font-size:10.5px;letter-spacing:.09em;color:var(--mut);text-transform:uppercase}
+.brand small{font-size:12px;color:var(--mut)}
 .nav{padding:12px;display:flex;flex-direction:column;gap:4px;flex:1}
 .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:9px;color:var(--sub);font-weight:500}
 .nav a:hover{background:var(--soft)}
-.nav a.on{background:var(--acc);color:var(--onacc);font-weight:700}
-.nav a em{margin-left:auto;font-style:normal;font-size:11px;background:var(--badbg);color:var(--red);border-radius:99px;padding:1px 8px;font-weight:700}
+.nav a.on{background:var(--acc);color:var(--onacc);font-weight:600}
+.nav a em{margin-left:auto;font-style:normal;font-size:11px;background:var(--badbg);color:var(--red);border-radius:99px;padding:1px 8px;font-weight:600}
 svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .who{border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:10px;align-items:center}
-.av{width:34px;height:34px;border-radius:50%;background:var(--hot);color:var(--acc2);display:grid;place-items:center;font-weight:700;flex:none;border:1px solid var(--acc)}
-.who b{display:block;font-size:12.5px;text-transform:uppercase}
+.av{width:34px;height:34px;border-radius:50%;background:var(--hot);color:var(--acc2);display:grid;place-items:center;font-weight:600;flex:none;border:1px solid var(--acc)}
+.who b{display:block;font-size:12.5px}
 .who small{color:var(--mut);font-size:11px;display:flex;align-items:center;gap:6px}
 .who small i{width:7px;height:7px;border-radius:50%;background:var(--grn)}
 .who small.local i{background:var(--amb)}
@@ -77,14 +77,14 @@ input[type=color]{padding:2px;height:36px}
 .card h2{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .card h2 .r{margin-left:auto;font-weight:500;font-size:12.5px;color:var(--mut);display:flex;gap:6px;align-items:center}
 .card h2 a{color:var(--acc2)}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc2);margin-bottom:4px}
+.eyebrow{font-family:var(--mono);font-size:13px;color:var(--acc2);margin-bottom:4px}
 .lead h2{font-size:21px;display:block;margin-bottom:4px}
 .lead p{color:var(--mut);font-size:13px}
 .lead{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.lead>div:first-child{margin-right:auto}
 .grid{display:grid;gap:14px}
 .g5{grid-template-columns:repeat(5,1fr)}.g2{grid-template-columns:3fr 2fr}.g2e{grid-template-columns:1fr 1fr}
 .kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;min-width:0}
-.kpi small{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);display:block}
+.kpi small{font-family:var(--mono);font-size:13px;color:var(--mut);display:block}
 .kpi b{font-family:var(--mono);font-size:25px;display:block;margin:3px 0 1px}
 .kpi span{color:var(--mut);font-size:12px}
 .kpi.warn b{color:var(--red)}
@@ -114,14 +114,14 @@ input[type=color]{padding:2px;height:36px}
 .calwrap{display:grid;grid-template-columns:1fr 300px;gap:14px;align-items:start}
 .calwrap.nobl{grid-template-columns:1fr}
 .cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--line);gap:1px}
-.dow{font-size:11px;color:var(--mut);text-align:center;padding:8px 0;font-family:var(--mono);background:var(--panel);letter-spacing:.08em}
+.dow{font-size:11px;color:var(--mut);text-align:center;padding:8px 0;font-family:var(--mono);background:var(--panel)}
 .dow.we{color:var(--acc2)}
 .cell{min-height:104px;background:var(--panel);padding:5px;display:flex;flex-direction:column;gap:3px;cursor:pointer;min-width:0}
 .cell.out{background:var(--panel2)}.cell.out em{opacity:.4}
 .cell.sel{box-shadow:inset 0 0 0 1.5px var(--acc)}
 .cell.over{background:var(--hot)}
 .ch{display:flex;align-items:center;justify-content:space-between}
-.ch em{font-style:normal;font-family:var(--mono);font-size:12.5px;font-weight:700;width:24px;height:24px;display:grid;place-items:center;border-radius:50%}
+.ch em{font-style:normal;font-family:var(--mono);font-size:12.5px;font-weight:600;width:24px;height:24px;display:grid;place-items:center;border-radius:50%}
 .today .ch em{background:var(--acc);color:var(--onacc)}
 .qa{border:0;background:none;color:var(--mut);padding:0 4px;font-size:16px;line-height:1;opacity:0}
 .cell:hover .qa{opacity:1}
@@ -142,8 +142,8 @@ input[type=color]{padding:2px;height:36px}
 .inl{display:flex;gap:8px;margin-bottom:8px}.inl input{flex:1}
 .hint{color:var(--mut);font-size:11.5px;text-align:center;margin-top:10px}
 /* charts */
-.radar{display:block;width:100%;max-width:420px;margin:0 auto}
-.radar text{fill:var(--sub);font-size:10px}
+.radar{display:block;width:100%;max-width:540px;margin:0 auto}
+.radar text{fill:var(--sub);font-size:11px}
 .radar .ring{fill:none;stroke:var(--line);stroke-dasharray:3 3}
 .legend{display:flex;gap:6px 14px;flex-wrap:wrap;justify-content:center;font-size:12px;margin-top:8px;color:var(--sub)}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;background:var(--c)}
@@ -211,29 +211,24 @@ input[type=color]{padding:2px;height:36px}
 /* ===== calm paper restyle + motion (matches Spending Tracker) ===== */
 html{background:var(--bg)}
 body{background:transparent;position:relative;font-family:Roboto,system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14.5px;padding:env(safe-area-inset-top) 0 calc(84px + env(safe-area-inset-bottom));height:auto;min-height:100%}
-body::before,body::after{content:"";position:fixed;z-index:-1;width:70vmax;height:70vmax;border-radius:50%;filter:blur(60px);pointer-events:none;will-change:transform}
-body::before{left:-25vmax;top:-30vmax;background:radial-gradient(circle,var(--blob1),transparent 65%);animation:drift1 26s ease-in-out infinite alternate}
-body::after{right:-30vmax;bottom:-25vmax;background:radial-gradient(circle,var(--blob2),transparent 65%);animation:drift2 32s ease-in-out infinite alternate}
-h1,h2,h3,h4{font-weight:500;letter-spacing:-.01em}
+h1,h2,h3,h4{font-weight:500}
 .hide{display:none!important}
 .app{display:block;max-width:1180px;margin:0 auto;min-height:0}
 .top{background:none;border:0;position:static;padding:18px 16px 8px;gap:10px}
 .top .tt{display:flex;align-items:center;gap:11px;flex:1;min-width:0;width:auto;margin-right:0}
 .top .tt>div{min-width:0}
 .top h1{font-size:22px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.top .tt small{display:block;font:500 11px Roboto,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-top:2px}
+.top .tt small{display:block;font:400 13px Roboto,system-ui,sans-serif;color:var(--mut);margin-top:2px}
 .top .tt small code{font:inherit;color:inherit}
 .logo2{width:40px;height:40px;flex:none;border-radius:12px;box-shadow:var(--shadow)}
-.logo2 .bk{animation:settle .9s var(--spring) both}
-.logo2 .coin{transform-origin:352px 352px;animation:coinin .9s .25s var(--spring) both}
 .tools{display:flex;gap:8px;width:100%;align-items:center}
 .tools #search{flex:1;width:auto;border-radius:999px;background:var(--panel);padding:9px 14px}
 @media(min-width:900px){.tools{width:auto;order:1}.tools #search{width:220px;flex:none}.themebtn{order:2}}
 .themebtn{position:relative;flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--txt);overflow:hidden;box-shadow:var(--shadow);transition:transform .25s var(--spring),background .3s,border-color .3s;padding:0}
 .themebtn:active{transform:scale(.9)}
 .themebtn svg{position:absolute;inset:9px;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .55s var(--spring),opacity .3s;pointer-events:none}
-.themebtn .moon{transform:translateY(26px) rotate(-60deg);opacity:0}
-html.is-dark .themebtn .sun{transform:translateY(-26px) rotate(60deg);opacity:0}
+.themebtn .moon{opacity:0}
+html.is-dark .themebtn .sun{opacity:0}
 html.is-dark .themebtn .moon{transform:none;opacity:1}
 html.theming,html.theming *,html.theming *::before,html.theming *::after{transition:background-color .45s ease,border-color .45s ease,color .45s ease,fill .45s ease,stroke .45s ease!important}
 .tabs{background:none;border:0;padding:4px 16px 10px;gap:8px;scrollbar-width:none}
@@ -249,9 +244,8 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
 .lead h2{font-size:22px}
 .eyebrow{font-weight:500;color:var(--acc)}
 .kpi{padding:16px;transition:transform .35s var(--spring),border-color .3s}
-.kpi:hover{transform:translateY(-3px)}
 .kpi small{font-weight:500}
-.kpi b{font-weight:500;font-size:28px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.kpi b{font-weight:500;font-size:28px;font-variant-numeric:tabular-nums}
 .btn{border-radius:999px;background:transparent;border:1px solid var(--line);color:var(--txt);font-weight:500;padding:9px 16px;transition:transform .2s var(--spring),opacity .2s,background .2s,border-color .2s}
 .btn.sm{padding:6px 12px}.btn.ic{padding:9px 10px}
 .btn.pri{background:var(--txt);border-color:var(--txt);color:var(--bg)}
@@ -281,7 +275,6 @@ input[type=range],input[type=checkbox]{box-shadow:none!important;padding:0}
 .nav a:hover{background:none}
 .nav a.on{background:none;color:var(--txt);font-weight:500}
 .nav a svg{width:22px;height:22px;transition:transform .45s var(--spring)}
-.nav a.on svg{transform:translateY(-2px) scale(1.12)}
 .nav a:active{transform:scale(.92)}
 .nav a span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .nav a em{position:absolute;top:0;right:10%;margin:0;padding:0 5px;font-size:9px}
@@ -293,22 +286,15 @@ input[type=range],input[type=checkbox]{box-shadow:none!important;padding:0}
 @media(min-width:700px){.modal{border-radius:20px}}
 #toast{display:block;opacity:0;pointer-events:none;border-radius:999px;font-weight:500;bottom:calc(96px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px) scale(.9);transition:opacity .3s,transform .45s var(--spring);box-shadow:var(--shadow)}
 #toast.on{opacity:1;transform:translateX(-50%)}
-#view.enter{animation:fade .45s var(--ease) both}
-#view.enter .card,#view.enter .kpi,#view.enter .ym{animation:up .6s var(--ease) both}
-#view.enter .cell{animation:dayin .4s var(--ease) both;animation-delay:calc(var(--i,0) * 10ms)}
-#view.enter .row{animation:rowin .45s var(--ease) both}
-.rv{opacity:0;transform:translateY(22px) scale(.985);transition:opacity .7s var(--ease),transform .8s var(--ease)}
+#view.enter{animation:fade .25s var(--ease) both}
+.rv{opacity:1}
 .rv.in{opacity:1;transform:none}
-@keyframes drift1{to{transform:translate(18vmax,14vmax) scale(1.15)}}
-@keyframes drift2{to{transform:translate(-16vmax,-12vmax) scale(1.1)}}
 @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@keyframes dayin{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
-@keyframes rowin{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes sheet{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
-@keyframes settle{from{opacity:0;transform:translateY(-70px)}to{opacity:1;transform:none}}
-@keyframes coinin{from{opacity:0;transform:scale(.3) rotate(-90deg)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+body{font-variant-numeric:tabular-nums}
+.btn:focus-visible,.tab:focus-visible,.nav a:focus-visible,.themebtn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -324,7 +310,7 @@ input[type=range],input[type=checkbox]{box-shadow:none!important;padding:0}
       <div class="tools"><input id="search" type="search" placeholder="Search tasks…" aria-label="Search tasks">
       <button class="btn ic" id="undoB" data-act="undo" aria-label="Undo" title="Undo (Ctrl+Z)"><svg class="i" viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg></button>
       <button class="btn ic" id="redoB" data-act="redo" aria-label="Redo" title="Redo (Ctrl+Y)"><svg class="i" viewBox="0 0 24 24"><path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 000 12h3"/></svg></button>
-      <button class="btn pri" data-act="add">+ Add Task</button></div>
+      <button class="btn pri" data-act="add">+ Add task</button></div>
     </div>
     <div class="tabs" id="tabs"></div>
     <div id="view"></div>
@@ -358,8 +344,8 @@ const PRI={Low:'#64748b',Medium:'#38bdf8',High:'#f59e0b',Critical:'#f87171'};
 const STC={Planned:'#38bdf8','In Progress':'#f59e0b','On Hold':'#94a3b8',Completed:'#34d399',Cancelled:'#f87171'};
 const IC={calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',overview:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',backlog:'<path d="M10 6h10M10 12h10M10 18h10"/><path d="M3.5 6l1 1 2-2M3.5 12l1 1 2-2M3.5 18l1 1 2-2"/>',analytics:'<path d="M4 20V4M4 20h17M9 16v-5M14 16V7M19 16v-3"/>',reports:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 17v-3M12 17v-6M15 17v-2"/>',config:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/>',pen:'<path d="M4 20h4L19 9l-4-4L4 16z"/>'};
 const ROUTES=['calendar','overview','backlog','analytics','reports','config','trash'];
-const NAVL={calendar:['Calendar Dashboard','Calendar'],overview:['KPIs & Overview','Overview'],backlog:['Task Backlog','Backlog'],analytics:['Analytics','Analytics'],reports:['PDF Reports','Reports'],config:['Settings','Settings'],trash:['Trash','Trash']};
-const TITLES={calendar:'Engineering Dashboard',overview:'KPIs & Overview',backlog:'Task Backlog',analytics:'Engineering Analytics & Radar',reports:'Performance Reports',config:'Settings & Preferences',trash:'Trash & Recovery'};
+const NAVL={calendar:['Calendar','Calendar'],overview:['Overview','Overview'],backlog:['Task backlog','Backlog'],analytics:['Analytics','Analytics'],reports:['PDF reports','Reports'],config:['Settings','Settings'],trash:['Trash','Trash']};
+const TITLES={calendar:'Calendar',overview:'Overview',backlog:'Task backlog',analytics:'Analytics',reports:'Reports',config:'Settings',trash:'Trash'};
 const FIXHOL={'01-01':'New Year’s Day','05-01':'Labour Day','08-31':'National Day','09-16':'Malaysia Day','12-25':'Christmas Day'};
 const LS='engjournal.v2';
 
@@ -443,7 +429,7 @@ function radarSvg(vals,unit){const cx=160,cy=118,R=84,mx=Math.max(1,...vals);con
  PIL.forEach((p,i)=>{const e=pt(i,R),l=pt(i,R+13);g+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="var(--line)"/><text x="'+l[0].toFixed(1)+'" y="'+(l[1]+(i===0?-2:i===2||i===3?10:3)).toFixed(1)+'" text-anchor="'+(i===0?'middle':i<3?'start':'end')+'">'+p[1]+' · '+r1(vals[i])+(unit||'')+'</text>'});
  const pts=vals.map((v,i)=>pt(i,R*v/mx));
  g+='<polygon points="'+pts.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ')+'" fill="var(--acc)" fill-opacity=".28" stroke="var(--acc)" stroke-width="1.5"/>'+pts.map(p=>'<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.5" fill="var(--acc)" stroke="var(--panel)"/>').join('');
- return'<svg class="radar" viewBox="0 0 320 236" role="img" aria-label="Radar chart of the five engineering pillars">'+g+'</svg>'}
+ return'<svg class="radar" viewBox="-56 0 432 236" role="img" aria-label="Radar chart of the five engineering pillars">'+g+'</svg>'}
 function pillarVals(T,metric){return PIL.map(p=>T.reduce((s,t)=>{const f=((t.pil||{})[p[0]]||0)/100;return s+f*(metric==='hours'?hours(t):metric==='done'?(isDone(t)?1:0):1)},0))}
 
 /* ---------- backlog panel ---------- */
@@ -452,7 +438,7 @@ function blList(){const q=ui.blq.toLowerCase(),po={Critical:0,High:1,Medium:2,Lo
  L.sort(ui.blsort==='pri'?(a,b)=>po[a.priority]-po[b.priority]:ui.blsort==='title'?(a,b)=>a.title.localeCompare(b.title):(a,b)=>(b.created||0)-(a.created||0));
  return L.map(taskRow).join('')||empty('Backlog is clear','Type above and press Enter to add an engineering activity.')}
 function blPanel(){const n=scoped().filter(t=>!t.start).length;
- return'<div class="card bl" data-drop=""><h2>Task Backlog <u>'+n+'</u><span class="r"><select id="blSort" aria-label="Sort backlog">'+[['new','Newest'],['pri','Priority'],['title','Title']].map(o=>'<option value="'+o[0]+'"'+(ui.blsort===o[0]?' selected':'')+'>'+o[1]+'</option>').join('')+'</select></span></h2><div class="inl"><input id="blQuick" placeholder="Quick add backlog task… (Enter)" maxlength="160"><button class="btn pri" data-act="bl-add" aria-label="Add to backlog">+</button></div><div class="inl"><input id="blFilter" type="search" placeholder="Filter backlog…" value="'+esc(ui.blq)+'"></div><div id="blList">'+blList()+'</div><div class="hint">Drag a task onto a calendar date to schedule it, or open it and set a start date.</div></div>'}
+ return'<div class="card bl" data-drop=""><h2>Task backlog <u>'+n+'</u><span class="r"><select id="blSort" aria-label="Sort backlog">'+[['new','Newest'],['pri','Priority'],['title','Title']].map(o=>'<option value="'+o[0]+'"'+(ui.blsort===o[0]?' selected':'')+'>'+o[1]+'</option>').join('')+'</select></span></h2><div class="inl"><input id="blQuick" placeholder="Quick add backlog task… (Enter)" maxlength="160"><button class="btn pri" data-act="bl-add" aria-label="Add to backlog">+</button></div><div class="inl"><input id="blFilter" type="search" placeholder="Filter backlog…" value="'+esc(ui.blq)+'"></div><div id="blList">'+blList()+'</div><div class="hint">Drag a task onto a calendar date to schedule it, or open it and set a start date.</div></div>'}
 
 /* ---------- views ---------- */
 const V={};
@@ -475,16 +461,16 @@ V.calendar=()=>{const c=ui.cur,v=ui.view,R=calRange(),td=today(),T=scoped(),y=+c
  else if(v==='day')body='<div>'+daySec(c,true)+'</div>';
  else{let s='';for(let d=R[0];d<=R[1];d=addDays(d,1))s+=daySec(d,false);body='<div>'+(s||'<div class="card">'+empty('No activities this month','Use “+ Add Task” or drag a task in from the backlog.')+'</div>')+'</div>'}
  return'<div class="calbar"><button class="btn sm" data-act="cal-nav" data-id="-1" aria-label="Previous">‹</button><button class="btn sm" data-act="cal-nav" data-id="0">Today</button><button class="btn sm" data-act="cal-nav" data-id="1" aria-label="Next">›</button><select id="yearSel" aria-label="Year">'+ys+'</select><h3>'+title+'</h3><button class="btn sm" data-act="report">Export PDF</button><button class="btn sm holb '+(state.settings.holidays?'on':'')+'" data-act="hol-toggle">Holidays</button><div class="seg">'+['year','month','week','day','agenda'].map(k=>'<button class="'+(k===v?'on':'')+'" data-act="cal-view" data-id="'+k+'">'+k[0].toUpperCase()+k.slice(1)+'</button>').join('')+'</div></div>'
- +'<div class="metrics"><span>'+inR.length+' Tasks</span>·<b>'+inR.filter(isDone).length+' Done</b>·<i>'+r1(inR.reduce((s,t)=>s+hours(t),0))+'h Total</i><button class="btn sm" data-act="bl-toggle">'+(ui.bl?'Hide':'Show')+' Backlog</button></div>'
+ +'<div class="metrics"><span>'+inR.length+' tasks</span>·<b>'+inR.filter(isDone).length+' done</b>·<i>'+r1(inR.reduce((s,t)=>s+hours(t),0))+'h total</i><button class="btn sm" data-act="bl-toggle">'+(ui.bl?'Hide':'Show')+' backlog</button></div>'
  +'<div class="calwrap '+(ui.bl?'':'nobl')+'">'+body+(ui.bl?blPanel():'')+'</div>'};
 V.overview=()=>{const T=scoped(),td=today(),done=T.filter(isDone).length,out=T.filter(isOpen),late=T.filter(isLate),bl=T.filter(t=>!t.start);
  const up=out.filter(t=>t.start&&t.start>td).sort((a,b)=>a.start<b.start?-1:1).slice(0,6),name=state.settings.name;
- return'<div class="card lead"><div><div class="eyebrow">Work Overview</div><h2>Welcome back'+(name?', '+esc(name):'')+'</h2><p>'+fmtLong(td)+'</p></div><button class="btn pri" data-act="add">+ Quick Add Activity</button><a class="btn" href="#calendar">Full Calendar</a><button class="btn" data-act="report">Export PDF</button>'+(state.tasks.length?'':'<button class="btn" data-act="sample">Load sample data</button>')+'</div>'
- +'<div class="grid g5" style="margin-bottom:14px">'+kpi('Total Tasks',T.length,bl.length+' in backlog')+kpi('Completed',done,'Closed tasks')+kpi('Outstanding',out.length,'Active engineering')+kpi('Overdue',late.length,'Passed target date',late.length)+kpi('Completion Rate',(T.length?Math.round(done/T.length*100):0)+'%','Progress ratio')+'</div>'
- +'<div class="grid g2"><div>'+card('Today’s Schedule • '+dmy(td),dayTasks(td).map(taskRow).join('')||empty('No tasks scheduled for today','Schedule tasks from your backlog or add a new activity.'),'<a href="#calendar">Open Calendar →</a>')
- +card('Upcoming Activities',up.map(taskRow).join('')||empty('No upcoming tasks scheduled in the near future.'),up.length+' queued')+'</div><div>'
- +card('Workload Distribution','<p style="color:var(--mut);font-size:12.5px;margin-bottom:6px">5 Engineering Pillars distribution across active tasks:</p>'+radarSvg(pillarVals(T,'count')),'<a href="#analytics">Full Analytics →</a>')
- +card('Task Backlog',bl.slice(0,4).map(taskRow).join('')||empty('Backlog is empty. All engineering tasks have been assigned dates.'),'<a href="#backlog">View All ('+bl.length+') →</a>')+'</div></div>'};
+ return'<div class="card lead"><div><h2>Work overview</h2></div><button class="btn pri" data-act="add">+ Quick add</button><a class="btn" href="#calendar">Full calendar</a><button class="btn" data-act="report">Export PDF</button>'+(state.tasks.length?'':'<button class="btn" data-act="sample">Load sample data</button>')+'</div>'
+ +'<div class="grid g5" style="margin-bottom:14px">'+kpi('Total tasks',T.length,bl.length+' in backlog')+kpi('Completed',done,'Closed tasks')+kpi('Outstanding',out.length,'Active engineering')+kpi('Overdue',late.length,'Passed target date',late.length)+kpi('Completion rate',(T.length?Math.round(done/T.length*100):0)+'%','Progress ratio')+'</div>'
+ +'<div class="grid g2"><div>'+card('Today · '+dmy(td),dayTasks(td).map(taskRow).join('')||empty('No tasks scheduled for today','Schedule tasks from your backlog or add a new activity.'),'<a href="#calendar">Open calendar →</a>')
+ +card('Upcoming',up.map(taskRow).join('')||empty('No upcoming tasks scheduled in the near future.'),up.length+' queued')+'</div><div>'
+ +card('Workload by pillar','<p style="color:var(--mut);font-size:12.5px;margin-bottom:6px">Active tasks across the five pillars</p>'+radarSvg(pillarVals(T,'count')),'<a href="#analytics">Full analytics →</a>')
+ +card('Task backlog',bl.slice(0,4).map(taskRow).join('')||empty('Backlog is empty. All engineering tasks have been assigned dates.'),'<a href="#backlog">View all ('+bl.length+') →</a>')+'</div></div>'};
 V.backlog=()=>'<div style="max-width:760px">'+blPanel()+'</div>';
 V.analytics=()=>{const td=today(),rg=ui.range,m=state.settings.metric,y=td.slice(0,4);let a='0000',b='9999';
  if(rg==='week'){a=monday(td);b=addDays(a,6)}else if(rg==='month'){a=td.slice(0,7)+'-01';b=addDays(addMonths(a,1),-1)}else if(rg==='quarter'){const q=Math.floor((+td.slice(5,7)-1)/3)*3+1;a=y+'-'+p2(q)+'-01';b=addDays(addMonths(a,3),-1)}else if(rg==='year'){a=y+'-01-01';b=y+'-12-31'}
@@ -493,24 +479,24 @@ V.analytics=()=>{const td=today(),rg=ui.range,m=state.settings.metric,y=td.slice
  const donut=tot?'<svg viewBox="0 0 160 160" style="display:block;width:100%;max-width:210px;margin:6px auto" role="img" aria-label="Category distribution"><g transform="rotate(-90 80 80)">'+PIL.map((p,i)=>{const f=pv[i]/tot,s='<circle cx="80" cy="80" r="54" fill="none" stroke="'+p[2]+'" stroke-width="24" stroke-dasharray="'+Math.max(0,f*C-1.5).toFixed(2)+' '+C.toFixed(2)+'" stroke-dashoffset="'+(-off*C).toFixed(2)+'"/>';off+=f;return f?s:''}).join('')+'</g></svg><div class="legend">'+PIL.map((p,i)=>'<span><i style="--c:'+p[2]+'"></i>'+p[1]+' '+Math.round(pv[i]/tot*100)+'%</span>').join('')+'</div>':empty('No data in this timeframe.');
  const mon=[];for(let i=0;i<12;i++){const f=y+'-'+p2(i+1)+'-01',l=addDays(addMonths(f,1),-1),mt=scoped().filter(t=>t.start&&t.start>=f&&t.start<=l);mon.push([parse(f).toLocaleDateString('en-GB',{month:'short'}),mt.length,mt.filter(isDone).length])}
  const mm=Math.max(1,...mon.map(x=>x[1])),wsv=state.workspaces.map(w=>[w,T.filter(t=>t.ws===w.id).reduce((s,t)=>s+val(t),0)]),wm=Math.max(1,...wsv.map(x=>x[1]));
- return'<div class="card"><div class="eyebrow">Engineering Activity Analytics</div><h2 style="font-size:20px;margin-bottom:4px">Workload, Radar & Productivity Performance</h2><p style="color:var(--mut);font-size:13px;margin-bottom:12px">Multi-dimensional evaluation across the 5 core engineering domains</p><div style="display:flex;gap:8px;flex-wrap:wrap"><div class="seg">'+[['week','This Week'],['month','This Month'],['quarter','Quarter'],['year','This Year'],['all','All Time']].map(o=>'<button class="'+(o[0]===rg?'on':'')+'" data-act="range" data-id="'+o[0]+'">'+o[1]+'</button>').join('')+'</div><select id="metricSel" aria-label="Metric">'+[['count','Metric: Task Count'],['done','Metric: Completed Tasks'],['hours','Metric: Task Duration (Hours)']].map(o=>'<option value="'+o[0]+'"'+(o[0]===m?' selected':'')+'>'+o[1]+'</option>').join('')+'</select><button class="btn" data-act="report">Export PDF Report</button></div></div>'
- +'<div class="grid g5" style="margin-bottom:14px">'+kpi('Total Activities',T.length,'Tasks in timeframe')+kpi('Completed',done,(T.length?Math.round(done/T.length*100):0)+'% completion')+kpi('Outstanding',T.filter(isOpen).length,'In progress / planned')+kpi('Overdue',T.filter(isLate).length,'Attention required',T.some(isLate))+kpi('Total Duration',r1(T.reduce((s,t)=>s+hours(t),0))+'h','From start & finish time')+'</div>'
- +'<div class="grid g2">'+card('Five Engineering Pillars Radar Analysis','<p style="color:var(--mut);font-size:12.5px;margin-bottom:6px">Balance across Leadership, Core Engineering, Improvements, Safety and Management.</p>'+radarSvg(pv,unit),'<span class="tag" style="--c:#38bdf8">'+(m==='hours'?'Hours':m==='done'?'Completed':'Count')+'</span>')+card('Category Distribution','<p style="color:var(--mut);font-size:12.5px">Proportion of engineering work across categories</p>'+donut)+'</div>'
- +'<div class="grid g2e">'+card('Monthly Engineering Activity Trend ('+y+')','<p style="color:var(--mut);font-size:12.5px;margin-bottom:10px">Total vs completed tasks by start month</p><div class="vb">'+mon.map(x=>'<div><div class="pair"><i style="background:#38bdf8;height:'+x[1]/mm*100+'%" title="Total '+x[1]+'"></i><i style="background:#34d399;height:'+x[2]/mm*100+'%" title="Completed '+x[2]+'"></i></div>'+x[0]+'</div>').join('')+'</div><div class="legend"><span><i style="--c:#38bdf8"></i>Total Tasks</span><span><i style="--c:#34d399"></i>Completed</span></div>')
- +card('Task Allocation by Workspace','<p style="color:var(--mut);font-size:12.5px;margin-bottom:6px">Work distribution across workspaces</p>'+wsv.map(x=>'<div class="hb"><span>'+esc(x[0].name)+'</span><div><i style="--c:'+esc(x[0].color)+';width:'+x[1]/wm*100+'%"></i></div><b>'+r1(x[1])+unit+'</b></div>').join(''))+'</div>'};
+ return'<div class="card"><div class="eyebrow">Analytics</div><h2 style="font-size:20px;margin-bottom:4px">Workload across the five pillars</h2><p style="color:var(--mut);font-size:13px;margin-bottom:12px">Task count, completion and hours for the period you pick</p><div style="display:flex;gap:8px;flex-wrap:wrap"><div class="seg">'+[['week','This week'],['month','This month'],['quarter','Quarter'],['year','This year'],['all','All time']].map(o=>'<button class="'+(o[0]===rg?'on':'')+'" data-act="range" data-id="'+o[0]+'">'+o[1]+'</button>').join('')+'</div><select id="metricSel" aria-label="Metric">'+[['count','Metric: task count'],['done','Metric: completed tasks'],['hours','Metric: hours (Hours)']].map(o=>'<option value="'+o[0]+'"'+(o[0]===m?' selected':'')+'>'+o[1]+'</option>').join('')+'</select><button class="btn" data-act="report">Export PDF</button></div></div>'
+ +'<div class="grid g5" style="margin-bottom:14px">'+kpi('Total tasks',T.length,'Tasks in timeframe')+kpi('Completed',done,(T.length?Math.round(done/T.length*100):0)+'% completion')+kpi('Outstanding',T.filter(isOpen).length,'In progress / planned')+kpi('Overdue',T.filter(isLate).length,'Attention required',T.some(isLate))+kpi('Total hours',r1(T.reduce((s,t)=>s+hours(t),0))+'h','From start & finish time')+'</div>'
+ +'<div class="grid g2">'+card('Five pillars','<p style="color:var(--mut);font-size:12.5px;margin-bottom:6px">Balance across Leadership, Core Engineering, Improvements, Safety and Management.</p>'+radarSvg(pv,unit),'<span class="tag" style="--c:#38bdf8">'+(m==='hours'?'Hours':m==='done'?'Completed':'Count')+'</span>')+card('Share by pillar','<p style="color:var(--mut);font-size:12.5px">Proportion of engineering work across categories</p>'+donut)+'</div>'
+ +'<div class="grid g2e">'+card('Monthly activity ('+y+')','<p style="color:var(--mut);font-size:12.5px;margin-bottom:10px">Total vs completed tasks by start month</p><div class="vb">'+mon.map(x=>'<div><div class="pair"><i style="background:#38bdf8;height:'+x[1]/mm*100+'%" title="Total '+x[1]+'"></i><i style="background:#34d399;height:'+x[2]/mm*100+'%" title="Completed '+x[2]+'"></i></div>'+x[0]+'</div>').join('')+'</div><div class="legend"><span><i style="--c:#38bdf8"></i>Total tasks</span><span><i style="--c:#34d399"></i>Completed</span></div>')
+ +card('Tasks by workspace','<p style="color:var(--mut);font-size:12.5px;margin-bottom:6px">Work distribution across workspaces</p>'+wsv.map(x=>'<div class="hb"><span>'+esc(x[0].name)+'</span><div><i style="--c:'+esc(x[0].color)+';width:'+x[1]/wm*100+'%"></i></div><b>'+r1(x[1])+unit+'</b></div>').join(''))+'</div>'};
 V.config=()=>{const s=state.settings,sel=(k,opts)=>'<select data-set="'+k+'">'+opts.map(o=>'<option value="'+o[0]+'"'+(String(s[k])===String(o[0])?' selected':'')+'>'+o[1]+'</option>').join('')+'</select>';
- return'<div class="card"><div class="eyebrow">System Preferences</div><h2 style="font-size:20px;margin-bottom:4px">Preferences & Configuration</h2><p style="color:var(--mut);font-size:13px">Configure your profile, calendar display, workspaces and backups. Changes save as you make them.</p></div>'
- +card('Appearance & Theme Mode','<div class="themes"><button class="'+(curTheme()==='dark'?'on':'')+'" data-act="set-theme" data-id="dark"><b>Dark Mode</b><small>Soft ink</small></button><button class="'+(curTheme()==='light'?'on':'')+'" data-act="set-theme" data-id="light"><b>Light Mode</b><small>Warm paper</small></button></div>')
- +'<div class="grid g2e">'+card('Engineer Profile','<div class="set"><label style="grid-column:span 2">Display Name<input data-set="name" value="'+esc(s.name)+'" maxlength="40" placeholder="Your name"></label></div>')
- +card('Calendar & Public Holidays','<div class="set"><label>Default Calendar View'+sel('view',[['year','Year View'],['month','Month View'],['week','Week View'],['day','Day View'],['agenda','Agenda / List View']])+'</label><label>First Day of Week<input value="Monday" disabled></label></div><label class="ck"><input type="checkbox" data-set="holidays"'+(s.holidays?' checked':'')+'>Display public holidays on the calendar</label>')+'</div>'
- +card('Engineering Defaults','<div class="set" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))"><label>Default Category'+sel('pillar',PIL.map(p=>[p[0],p[1]]))+'</label><label>Default Priority'+sel('priority',Object.keys(PRI).map(p=>[p,p]))+'</label><label>Default Analytics Metric'+sel('metric',[['count','Task Count'],['done','Completed Tasks'],['hours','Task Duration (Hours)']])+'</label></div>')
- +card('Manage Workspaces ('+state.workspaces.length+')',state.workspaces.map(w=>'<div class="wsr"><i class="dot" style="background:'+esc(w.color)+'"></i><div><b>'+esc(w.name)+'</b><small>'+esc(w.desc||'')+'</small></div><button class="btn sm" data-act="ws-edit" data-id="'+w.id+'">Edit</button></div>').join(''),'<button class="btn sm" data-act="ws-edit">+ Add Workspace</button>')
- +card('Holiday Dates','<p style="color:var(--mut);font-size:12.5px;margin-bottom:10px">Fixed-date holidays (New Year, Labour Day, National Day, Malaysia Day, Christmas) are built in. Add the ones that move each year here.</p>'+s.customHolidays.slice().sort((a,b)=>a.date<b.date?-1:1).map(h=>'<div class="wsr"><div><b>'+esc(h.name)+'</b><small>'+dmy(h.date)+'</small></div><button class="btn sm dan" data-act="hol-del" data-id="'+h.date+'">Remove</button></div>').join('')+'<div class="inl" style="margin-top:10px"><input type="date" id="holDate" style="flex:0 1 150px"><input id="holName" placeholder="Holiday name" maxlength="40"><button class="btn" data-act="hol-add">Add</button></div>')
- +card('Task Reminders',remindCard())
- +card('Data Export & Backup','<p style="color:var(--mut);font-size:12.5px;margin-bottom:10px">Copy your tasks as CSV (paste into Excel) or a full backup as text. Paste a backup below to restore it.</p><button class="btn" data-act="copy-csv">Copy Tasks (CSV)</button> <button class="btn" data-act="copy-json">Copy Full Backup</button><div class="inl" style="margin-top:10px"><input id="restoreTxt" placeholder="Paste backup text here"><button class="btn" data-act="restore-json">Restore</button></div><div id="bmsg" style="color:var(--mut);font-size:12.5px"></div><div style="margin-top:12px"><button class="btn" data-act="sample">Load sample data</button> <button class="btn dan" data-act="clear">Clear all tasks</button></div>')};
+ return'<div class="card"><div class="eyebrow">Settings</div><h2 style="font-size:20px;margin-bottom:4px">Preferences</h2><p style="color:var(--mut);font-size:13px">Configure your profile, calendar display, workspaces and backups. Changes save as you make them.</p></div>'
+ +card('Appearance','<div class="themes"><button class="'+(curTheme()==='dark'?'on':'')+'" data-act="set-theme" data-id="dark"><b>Dark Mode</b><small>Soft ink</small></button><button class="'+(curTheme()==='light'?'on':'')+'" data-act="set-theme" data-id="light"><b>Light Mode</b><small>Warm paper</small></button></div>')
+ +'<div class="grid g2e">'+card('Profile','<div class="set"><label style="grid-column:span 2">Display Name<input data-set="name" value="'+esc(s.name)+'" maxlength="40" placeholder="Your name"></label></div>')
+ +card('Calendar and public holidays','<div class="set"><label>Default Calendar View'+sel('view',[['year','Year View'],['month','Month View'],['week','Week View'],['day','Day View'],['agenda','Agenda / List View']])+'</label><label>First Day of Week<input value="Monday" disabled></label></div><label class="ck"><input type="checkbox" data-set="holidays"'+(s.holidays?' checked':'')+'>Display public holidays on the calendar</label>')+'</div>'
+ +card('Defaults for new tasks','<div class="set" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))"><label>Default Category'+sel('pillar',PIL.map(p=>[p[0],p[1]]))+'</label><label>Default Priority'+sel('priority',Object.keys(PRI).map(p=>[p,p]))+'</label><label>Default Analytics Metric'+sel('metric',[['count','Task Count'],['done','Completed Tasks'],['hours','Task Duration (Hours)']])+'</label></div>')
+ +card('Workspaces ('+state.workspaces.length+')',state.workspaces.map(w=>'<div class="wsr"><i class="dot" style="background:'+esc(w.color)+'"></i><div><b>'+esc(w.name)+'</b><small>'+esc(w.desc||'')+'</small></div><button class="btn sm" data-act="ws-edit" data-id="'+w.id+'">Edit</button></div>').join(''),'<button class="btn sm" data-act="ws-edit">+ Add workspace</button>')
+ +card('Holiday dates','<p style="color:var(--mut);font-size:12.5px;margin-bottom:10px">Fixed-date holidays (New Year, Labour Day, National Day, Malaysia Day, Christmas) are built in. Add the ones that move each year here.</p>'+s.customHolidays.slice().sort((a,b)=>a.date<b.date?-1:1).map(h=>'<div class="wsr"><div><b>'+esc(h.name)+'</b><small>'+dmy(h.date)+'</small></div><button class="btn sm dan" data-act="hol-del" data-id="'+h.date+'">Remove</button></div>').join('')+'<div class="inl" style="margin-top:10px"><input type="date" id="holDate" style="flex:0 1 150px"><input id="holName" placeholder="Holiday name" maxlength="40"><button class="btn" data-act="hol-add">Add</button></div>')
+ +card('Task reminders',remindCard())
+ +card('Export and backup','<p style="color:var(--mut);font-size:12.5px;margin-bottom:10px">Copy your tasks as CSV (paste into Excel) or a full backup as text. Paste a backup below to restore it.</p><button class="btn" data-act="copy-csv">Copy Tasks (CSV)</button> <button class="btn" data-act="copy-json">Copy Full Backup</button><div class="inl" style="margin-top:10px"><input id="restoreTxt" placeholder="Paste backup text here"><button class="btn" data-act="restore-json">Restore</button></div><div id="bmsg" style="color:var(--mut);font-size:12.5px"></div><div style="margin-top:12px"><button class="btn" data-act="sample">Load sample data</button> <button class="btn dan" data-act="clear">Clear all tasks</button></div>')};
 V.trash=()=>{const T=state.tasks.filter(t=>t.deleted).sort((a,b)=>b.deleted-a.deleted);
- return'<div class="card lead"><div><div class="eyebrow">Recovery Bin</div><h2>Recently Deleted Tasks</h2><p>Items remain recoverable here. Restore them or permanently remove them.</p></div><span class="tag" style="--c:#f87171">'+T.length+' task'+(T.length===1?'':'s')+' in trash</span></div>'
- +(T.map(t=>{const p=PM[dom(t)];return'<div class="card" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div style="flex:1;min-width:200px"><span class="tag" style="--c:'+p[2]+'">'+p[1]+'</span><div class="rt" style="margin-top:6px">'+esc(t.title)+'</div>'+(t.desc?'<div class="rd">'+esc(t.desc)+'</div>':'')+'<div class="rd">Deleted on '+dmy(iso(new Date(t.deleted)))+'</div></div><button class="btn sm" data-act="restore" data-id="'+t.id+'">Restore Task</button><button class="btn sm dan" data-act="erase" data-id="'+t.id+'">Erase</button></div>'}).join('')||'<div class="card">'+empty('Trash is empty.')+'</div>')};
+ return'<div class="card lead"><div><div class="eyebrow">Trash</div><h2>Recently deleted tasks</h2><p>Items remain recoverable here. Restore them or permanently remove them.</p></div><span class="tag" style="--c:#f87171">'+T.length+' task'+(T.length===1?'':'s')+' in trash</span></div>'
+ +(T.map(t=>{const p=PM[dom(t)];return'<div class="card" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div style="flex:1;min-width:200px"><span class="tag" style="--c:'+p[2]+'">'+p[1]+'</span><div class="rt" style="margin-top:6px">'+esc(t.title)+'</div>'+(t.desc?'<div class="rd">'+esc(t.desc)+'</div>':'')+'<div class="rd">Deleted on '+dmy(iso(new Date(t.deleted)))+'</div></div><button class="btn sm" data-act="restore" data-id="'+t.id+'">Restore</button><button class="btn sm dan" data-act="erase" data-id="'+t.id+'">Erase</button></div>'}).join('')||'<div class="card">'+empty('Trash is empty.')+'</div>')};
 function searchView(){const q=ui.q.toLowerCase(),L=live().filter(t=>[t.title,t.desc,t.notes,(wsOf(t.ws)||{}).name].some(x=>x&&x.toLowerCase().includes(q)));
  return card('Search results for “'+esc(ui.q)+'”',L.map(taskRow).join('')||empty('No matching tasks.'),L.length+' found')}
 
@@ -641,10 +627,10 @@ async function buildPdf(L,m){const PDFDocument=L.PDFDocument,StandardFonts=L.Sta
  return doc.save()}
 
 V.reports=()=>{const m=reportModel(ui.rk,ui.rc),s=m.s,p=m.p,wk=m.kind==='week',mx=Math.max(1,...m.days.map(d=>d.h));
- return'<div class="card lead"><div><div class="eyebrow">PDF Reports</div><h2>'+m.title+'</h2><p>'+esc(m.period)+' · '+esc(m.scope)+'</p></div><div class="seg"><button class="'+(wk?'on':'')+'" data-act="rep-kind" data-id="week">Weekly</button><button class="'+(wk?'':'on')+'" data-act="rep-kind" data-id="month">Monthly</button></div><button class="btn sm" data-act="rep-nav" data-id="-1" aria-label="Previous period">‹</button><button class="btn sm" data-act="rep-nav" data-id="0">'+(wk?'This week':'This month')+'</button><button class="btn sm" data-act="rep-nav" data-id="1" aria-label="Next period">›</button><button class="btn pri" data-act="pdf">Download PDF</button><div id="pdfMsg" style="flex-basis:100%;color:var(--mut);font-size:12.5px"></div></div>'
- +'<div class="grid g5" style="margin-bottom:14px">'+kpi('Total Activities',s.total,m.dl(s.total,p.total))+kpi('Completed',s.done,s.rate+'% completion')+kpi('Outstanding',s.open,'Planned / in progress')+kpi('Overdue',s.late,s.late?'Attention required':'Nothing overdue',s.late)+kpi('Total Hours',s.hours+'h',m.dl(s.hours,p.hours,'h'))+'</div>'
+ return'<div class="card lead"><div><div class="eyebrow">PDF reports</div><h2>'+m.title+'</h2><p>'+esc(m.period)+' · '+esc(m.scope)+'</p></div><div class="seg"><button class="'+(wk?'on':'')+'" data-act="rep-kind" data-id="week">Weekly</button><button class="'+(wk?'':'on')+'" data-act="rep-kind" data-id="month">Monthly</button></div><button class="btn sm" data-act="rep-nav" data-id="-1" aria-label="Previous period">‹</button><button class="btn sm" data-act="rep-nav" data-id="0">'+(wk?'This week':'This month')+'</button><button class="btn sm" data-act="rep-nav" data-id="1" aria-label="Next period">›</button><button class="btn pri" data-act="pdf">Download PDF</button><div id="pdfMsg" style="flex-basis:100%;color:var(--mut);font-size:12.5px"></div></div>'
+ +'<div class="grid g5" style="margin-bottom:14px">'+kpi('Total tasks',s.total,m.dl(s.total,p.total))+kpi('Completed',s.done,s.rate+'% completion')+kpi('Outstanding',s.open,'Planned / in progress')+kpi('Overdue',s.late,s.late?'Attention required':'Nothing overdue',s.late)+kpi('Total hours',s.hours+'h',m.dl(s.hours,p.hours,'h'))+'</div>'
  +'<div class="grid g2">'+card('Highlights','<ul style="margin:0;padding-left:18px;color:var(--sub);line-height:1.7">'+m.ins.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>')+card('Five Pillars',radarSvg(m.pc))+'</div>'
- +card('Daily Workload','<div class="vb">'+m.days.map(d=>'<div><b style="color:var(--txt);font-weight:500">'+(d.h&&wk?d.h+'h':'')+'</b><i style="display:block;width:70%;max-width:38px;border-radius:4px 4px 0 0;min-height:'+(d.n?2:0)+'px;height:'+d.h/mx*78+'%;background:'+(d.hol?'var(--amb)':d.we?'#93c5fd':'var(--acc)')+'" title="'+fmt(d.d)+': '+d.n+' tasks, '+d.h+'h"></i>'+(wk?parse(d.d).toLocaleDateString('en-GB',{weekday:'short'})+' ':'')+parse(d.d).getDate()+'</div>').join('')+'</div>','Hours per day')
+ +card('Daily workload','<div class="vb">'+m.days.map(d=>'<div><b style="color:var(--txt);font-weight:500">'+(d.h&&wk?d.h+'h':'')+'</b><i style="display:block;width:70%;max-width:38px;border-radius:4px 4px 0 0;min-height:'+(d.n?2:0)+'px;height:'+d.h/mx*78+'%;background:'+(d.hol?'var(--amb)':d.we?'#93c5fd':'var(--acc)')+'" title="'+fmt(d.d)+': '+d.n+' tasks, '+d.h+'h"></i>'+(wk?parse(d.d).toLocaleDateString('en-GB',{weekday:'short'})+' ':'')+parse(d.d).getDate()+'</div>').join('')+'</div>','Hours per day')
  +card('Activities in this period',m.T.map(taskRow).join('')||empty('No activities were scheduled in this period.'),m.T.length+' in report')};
 async function exportPdf(){const say=t=>{const e=$('#pdfMsg');if(e)e.textContent=t;toast(t)};
  if(!window.PDFLib){say('The PDF engine did not load. Reload the page and try again.');return}
@@ -661,10 +647,10 @@ function renderView(){$('#view').innerHTML=ui.q?searchView():V[route()]()}
 function render(){const r=route(),tr=state.tasks.filter(t=>t.deleted).length,L=live(),td=today(),nm=state.settings.name||'Engineer';
  applyTheme();
  $('#nav').innerHTML=ROUTES.map(k=>'<a href="#'+k+'" class="'+(k===r?'on':'')+'" title="'+NAVL[k][0]+'">'+icon(k)+'<span>'+NAVL[k][1]+'</span>'+(k==='trash'&&tr?'<em>'+tr+'</em>':'')+'</a>').join('');
- $('#title').textContent=TITLES[r];$('#dateLine').innerHTML=fmtLong(td)+' <code>('+dmy(td)+')</code>';
+ $('#title').textContent=TITLES[r];$('#dateLine').textContent=fmtLong(td);
  $('#whoName').textContent=nm;$('#av').textContent=nm[0].toUpperCase();
  $('#undoB').disabled=!hist.length;$('#redoB').disabled=!fut.length;
- $('#tabs').innerHTML='<button class="tab '+(state.active==='all'?'on':'')+'" data-act="ws" data-id="all">All Workspaces <u>'+L.length+'</u></button>'+state.workspaces.map(w=>'<button class="tab '+(state.active===w.id?'on':'')+'" data-act="ws" data-id="'+w.id+'"><i class="dot" style="background:'+esc(w.color)+';margin:0"></i>'+esc(w.name)+' <u>'+L.filter(t=>t.ws===w.id).length+'</u><span class="pen" data-act="ws-edit" data-id="'+w.id+'" role="button" aria-label="Edit workspace">'+icon('pen')+'</span></button>').join('')+'<button class="tab" data-act="ws-edit">+ New Workspace</button>';
+ $('#tabs').innerHTML='<button class="tab '+(state.active==='all'?'on':'')+'" data-act="ws" data-id="all">All Workspaces <u>'+L.length+'</u></button>'+state.workspaces.map(w=>'<button class="tab '+(state.active===w.id?'on':'')+'" data-act="ws" data-id="'+w.id+'"><i class="dot" style="background:'+esc(w.color)+';margin:0"></i>'+esc(w.name)+' <u>'+L.filter(t=>t.ws===w.id).length+'</u><span class="pen" data-act="ws-edit" data-id="'+w.id+'" role="button" aria-label="Edit workspace">'+icon('pen')+'</span></button>').join('')+'<button class="tab" data-act="ws-edit">+ New workspace</button>';
  renderView();fx()}
 /* ---------- theme (follows the device until chosen, then remembered on this device) + motion ---------- */
 const mq=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null,noMotion=()=>!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
