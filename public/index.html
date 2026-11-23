@@ -380,6 +380,17 @@ const ui={cur:today(),sel:today(),view:state.settings.view,bl:true,blq:'',blsort
 let cloud=null,pushT=null,pushing=false,dirty=false,last=JSON.stringify(state),hist=[],fut=[];
 function setSync(m){const t=m==='cloud'?'Synced to your account':m==='saving'?'Saving…':'Saved on this device';
  const el=$('#sync');el.className=m==='local'?'local':'';el.querySelector('span').textContent=t;$('#msync').textContent=t}
+/* Restore merges: anything in the backup that this device doesn't have yet is added; tasks, workspaces and holidays already here stay exactly as they are. Settings are not touched. */
+function mergeBackup(o){const inc=normalize(o),wsMap={},byName={};
+ state.workspaces.forEach(w=>{wsMap[w.id]=w.id;byName[w.name.trim().toLowerCase()]=w.id});
+ let nw=0;inc.workspaces.forEach(w=>{if(wsMap[w.id])return;const same=byName[w.name.trim().toLowerCase()];if(same){wsMap[w.id]=same;return}
+  if(state.workspaces.length>=50){wsMap[w.id]=state.workspaces[0].id;return}state.workspaces.push(w);wsMap[w.id]=w.id;byName[w.name.trim().toLowerCase()]=w.id;nw++});
+ const have=new Set(state.tasks.map(t=>t.id));let nt=0,kept=0;
+ inc.tasks.forEach(t=>{if(have.has(t.id)){kept++;return}if(state.tasks.length>=MAXT)return;state.tasks.push(Object.assign({},t,{ws:wsMap[t.ws]||state.workspaces[0].id}));have.add(t.id);nt++});
+ let nh=0;const hs=state.settings.customHolidays||(state.settings.customHolidays=[]),hd=new Set(hs.map(x=>x.date));
+ (inc.settings.customHolidays||[]).forEach(x=>{if(!hd.has(x.date)){hs.push(x);hd.add(x.date);nh++}});
+ const parts=[nt+' new task'+(nt===1?'':'s')];if(nw)parts.push(nw+' workspace'+(nw===1?'':'s'));if(nh)parts.push(nh+' holiday'+(nh===1?'':'s'));
+ return 'Restore done: added '+parts.join(', ')+'. '+kept+' task'+(kept===1?'':'s')+' already here left unchanged.'}
 function save(noHist){const prev=last;state.updated=Date.now();state=normalize(state);last=JSON.stringify(state);
  if(!noHist){hist.push(prev);if(hist.length>40)hist.shift();fut=[]}
  try{localStorage.setItem(LS,last)}catch(e){}
@@ -493,7 +504,7 @@ V.config=()=>{const s=state.settings,sel=(k,opts)=>'<select data-set="'+k+'">'+o
  +card('Workspaces ('+state.workspaces.length+')',state.workspaces.map(w=>'<div class="wsr"><i class="dot" style="background:'+esc(w.color)+'"></i><div><b>'+esc(w.name)+'</b><small>'+esc(w.desc||'')+'</small></div><button class="btn sm" data-act="ws-edit" data-id="'+w.id+'">Edit</button></div>').join(''),'<button class="btn sm" data-act="ws-edit">+ Add workspace</button>')
  +card('Holiday dates','<p style="color:var(--mut);font-size:12.5px;margin-bottom:10px">Fixed-date holidays (New Year, Labour Day, National Day, Malaysia Day, Christmas) are built in. Add the ones that move each year here.</p>'+s.customHolidays.slice().sort((a,b)=>a.date<b.date?-1:1).map(h=>'<div class="wsr"><div><b>'+esc(h.name)+'</b><small>'+dmy(h.date)+'</small></div><button class="btn sm dan" data-act="hol-del" data-id="'+h.date+'">Remove</button></div>').join('')+'<div class="inl" style="margin-top:10px"><input type="date" id="holDate" style="flex:0 1 150px"><input id="holName" placeholder="Holiday name" maxlength="40"><button class="btn" data-act="hol-add">Add</button></div>')
  +card('Task reminders',remindCard())
- +card('Export and backup','<p style="color:var(--mut);font-size:12.5px;margin-bottom:10px">Copy your tasks as CSV (paste into Excel) or a full backup as text. Paste a backup below to restore it.</p><button class="btn" data-act="copy-csv">Copy Tasks (CSV)</button> <button class="btn" data-act="copy-json">Copy Full Backup</button><div class="inl" style="margin-top:10px"><input id="restoreTxt" placeholder="Paste backup text here"><button class="btn" data-act="restore-json">Restore</button></div><div id="bmsg" style="color:var(--mut);font-size:12.5px"></div><div style="margin-top:12px"><button class="btn" data-act="sample">Load sample data</button> <button class="btn dan" data-act="clear">Clear all tasks</button></div>')};
+ +card('Export and backup','<p style="color:var(--mut);font-size:12.5px;margin-bottom:10px">Copy your tasks as CSV (paste into Excel) or a full backup as text. Pasting a backup below adds only what this device doesn’t have yet; tasks already here stay as they are.</p><button class="btn" data-act="copy-csv">Copy Tasks (CSV)</button> <button class="btn" data-act="copy-json">Copy Full Backup</button><div class="inl" style="margin-top:10px"><input id="restoreTxt" placeholder="Paste backup text here"><button class="btn" data-act="restore-json">Restore</button></div><div id="bmsg" style="color:var(--mut);font-size:12.5px"></div><div style="margin-top:12px"><button class="btn" data-act="sample">Load sample data</button> <button class="btn dan" data-act="clear">Clear all tasks</button></div>')};
 V.trash=()=>{const T=state.tasks.filter(t=>t.deleted).sort((a,b)=>b.deleted-a.deleted);
  return'<div class="card lead"><div><div class="eyebrow">Trash</div><h2>Recently deleted tasks</h2><p>Items remain recoverable here. Restore them or permanently remove them.</p></div><span class="tag" style="--c:#f87171">'+T.length+' task'+(T.length===1?'':'s')+' in trash</span></div>'
  +(T.map(t=>{const p=PM[dom(t)];return'<div class="card" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div style="flex:1;min-width:200px"><span class="tag" style="--c:'+p[2]+'">'+p[1]+'</span><div class="rt" style="margin-top:6px">'+esc(t.title)+'</div>'+(t.desc?'<div class="rd">'+esc(t.desc)+'</div>':'')+'<div class="rd">Deleted on '+dmy(iso(new Date(t.deleted)))+'</div></div><button class="btn sm" data-act="restore" data-id="'+t.id+'">Restore</button><button class="btn sm dan" data-act="erase" data-id="'+t.id+'">Erase</button></div>'}).join('')||'<div class="card">'+empty('Trash is empty.')+'</div>')};
@@ -745,7 +756,7 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if
  else if(a==='rm-toggle')rmToggle();
  else if(a==='rm-test')rmTest();
  else if(a==='copy-json')copy(JSON.stringify(state),'Backup copied — paste it somewhere safe.');
- else if(a==='restore-json'){const m=$('#bmsg');try{const raw=$('#restoreTxt').value;if(raw.length>3e6)throw 0;const o=JSON.parse(raw);if(!o||typeof o!=='object'||!Array.isArray(o.tasks))throw 0;state=normalize(o);save();$('#bmsg').textContent='Backup restored.'}catch(x){m.textContent='That text is not a valid backup.'}}
+ else if(a==='restore-json'){const m=$('#bmsg');let r;try{const raw=$('#restoreTxt').value;if(raw.length>3e6)throw 0;const o=JSON.parse(raw);if(!o||typeof o!=='object'||!Array.isArray(o.tasks))throw 0;r=mergeBackup(o)}catch(x){m.textContent='That text is not a valid backup.';return}save();$('#restoreTxt').value='';$('#bmsg').textContent=r}
  else if(a==='m-close')closeForm();
  else if(a==='m-del'){if(onDel){onDel();closeForm();save()}}
  else if(a==='m-dup'){if(onDup){onDup();closeForm();save()}}
